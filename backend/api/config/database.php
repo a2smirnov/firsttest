@@ -4,8 +4,8 @@ class Database {
     // укажите свои учетные данные базы данных 
     private $host = "localhost";
     private $db_name = "api_db";
-    private $username = "root";
-    private $password = "";
+    private $username = "admin";
+    private $password = "admin";
     public $conn;
 
     // получаем соединение с БД 

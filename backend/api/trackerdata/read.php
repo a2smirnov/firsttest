@@ -15,10 +15,12 @@ $db = $database->getConnection();
 $trackerdata = new TrackerData($db);
  
 // получаем дату для запроса статистики 
-$data = json_decode(file_get_contents("php://input"));
+//$data = json_decode(file_get_contents("php://input"));
+$data_tmp = "2021-05-20";
 
 // установим дату для запроса 
-$trackerdata->date_value = $data->date_value;
+//$trackerdata->date_value = $data->date_value;
+$trackerdata->date_value = $data_tmp;
 
 // запрашиваем статистику 
 $stmt = $trackerdata->read();
@@ -62,6 +64,7 @@ else {
     // установим код ответа - 404 Не найдено 
     http_response_code(404);
 
-    // сообщаем пользователю, что товары не найдены 
-    echo json_encode(array("message" => "Товары не найдены."), JSON_UNESCAPED_UNICODE);
+    // сообщаем пользователю, что данные не найдены 
+    echo json_encode(array("message" => "Данные не найдены."), JSON_UNESCAPED_UNICODE);
 }
+?>
