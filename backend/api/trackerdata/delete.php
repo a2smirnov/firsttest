@@ -6,25 +6,25 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// подключим файл для соединения с базой и объектом Product 
+// подключим файл для соединения с базой и объектом trackerdata 
 include_once '../config/database.php';
-include_once '../objects/product.php';
+include_once '../objects/trackerdata.php';
 
 // получаем соединение с БД 
 $database = new Database();
 $db = $database->getConnection();
 
 // подготовка объекта 
-$product = new Product($db);
+$trackerdata = new TrackerData($db);
 
 // получаем id товара 
 $data = json_decode(file_get_contents("php://input"));
 
 // установим id товара для удаления 
-$product->id = $data->id;
+$trackerdata->id = $data->id;
 
 // удаление товара 
-if ($product->delete()) {
+if ($trackerdata->delete()) {
 
     // код ответа - 200 ok 
     http_response_code(200);

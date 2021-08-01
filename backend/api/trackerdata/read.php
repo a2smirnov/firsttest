@@ -12,18 +12,24 @@ $database = new Database();
 $db = $database->getConnection();
 
 // инициализируем объект 
-$product = new TrackerData($db);
+$trackerdata = new TrackerData($db);
  
-// запрашиваем товары 
-$stmt = $product->read();
+// получаем дату для запроса статистики 
+$data = json_decode(file_get_contents("php://input"));
+
+// установим дату для запроса 
+$trackerdata->date_value = $data->date_value;
+
+// запрашиваем статистику 
+$stmt = $trackerdata->read();
 $num = $stmt->rowCount();
 
 // проверка, найдено ли больше 0 записей 
 if ($num>0) {
 
-    // массив товаров 
-    $products_arr=array();
-    $products_arr["records"]=array();
+    // массив данных на дату
+    $trackerdatas_arr=array();
+    $trackerdatas_arr["records"]=array();
 
     // получаем содержимое нашей таблицы 
     // fetch() быстрее, чем fetchAll() 
@@ -32,23 +38,23 @@ if ($num>0) {
         // извлекаем строку 
         extract($row);
 
-        $product_item=array(
-            "id" => $id,
+        $trackerdata_item=array(
+            "country_code" => $country_code,
             "name" => $name,
-            "description" => html_entity_decode($description),
-            "price" => $price,
-            "category_id" => $category_id,
-            "category_name" => $category_name
+            "confirmed" => $confirmed,
+            "deaths" => $deaths,
+            "stringency_actual" => $stringency_actual,
+            "stringency" => $stringency
         );
 
-        array_push($products_arr["records"], $product_item);
+        array_push($trackerdatas_arr["records"], $trackerdata_item);
     }
 
     // устанавливаем код ответа - 200 OK 
     http_response_code(200);
 
     // выводим данные о товаре в формате JSON 
-    echo json_encode($products_arr);
+    echo json_encode($trackerdatas_arr);
 }
 
 else {

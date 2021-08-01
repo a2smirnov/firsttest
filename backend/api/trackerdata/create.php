@@ -10,12 +10,12 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once '../config/database.php';
 
 // создание объекта товара 
-include_once '../objects/product.php';
+include_once '../objects/trackerdata.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$product = new Product($db);
+$trackerdata = new TrackerData($db);
  
 // получаем отправленные данные 
 $data = json_decode(file_get_contents("php://input"));
@@ -29,14 +29,14 @@ if (
 ) {
 
     // устанавливаем значения свойств товара 
-    $product->name = $data->name;
-    $product->price = $data->price;
-    $product->description = $data->description;
-    $product->category_id = $data->category_id;
-    $product->created = date('Y-m-d H:i:s');
+    $trackerdata->name = $data->name;
+    $trackerdata->price = $data->price;
+    $trackerdata->description = $data->description;
+    $trackerdata->category_id = $data->category_id;
+    $trackerdata->created = date('Y-m-d H:i:s');
 
     // создание товара 
-    if($product->create()){
+    if($trackerdata->create()){
 
         // установим код ответа - 201 создано 
         http_response_code(201);

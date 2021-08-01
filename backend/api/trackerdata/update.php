@@ -15,22 +15,22 @@ $database = new Database();
 $db = $database->getConnection();
 
 // подготовка объекта 
-$product = new Product($db);
+$trackerdata = new TrackerData($db);
 
 // получаем id товара для редактирования 
 $data = json_decode(file_get_contents("php://input"));
 
 // установим id свойства товара для редактирования 
-$product->id = $data->id;
+$trackerdata->id = $data->id;
 
 // установим значения свойств товара 
-$product->name = $data->name;
-$product->price = $data->price;
-$product->description = $data->description;
-$product->category_id = $data->category_id;
+$trackerdata->name = $data->name;
+$trackerdata->price = $data->price;
+$trackerdata->description = $data->description;
+$trackerdata->category_id = $data->category_id;
 
 // обновление товара 
-if ($product->update()) {
+if ($trackerdata->update()) {
 
     // установим код ответа - 200 ok 
     http_response_code(200);
