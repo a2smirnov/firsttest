@@ -18,28 +18,32 @@ $db = $database->getConnection();
 $trackerdata = new TrackerData($db);
 
 // получаем id товара для редактирования 
-$data = json_decode(file_get_contents("php://input"));
+//$data = json_decode(file_get_contents("php://input"));
 
 // установим id свойства товара для редактирования 
 //$trackerdata->id = $data->id;
 
-// обновление товара 
-if ($trackerdata->update()) {
+// обновление данных
+//$all_good = true;
+//$dataset = $trackerdata->update();
+
+
+if ($dataset = $trackerdata->update()) {
 
     // установим код ответа - 200 ok 
     http_response_code(200);
 
     // сообщим пользователю 
-    echo json_encode(array("message" => "Товар был обновлён."), JSON_UNESCAPED_UNICODE);
+    echo json_encode(array("message" => "База обновлена."), JSON_UNESCAPED_UNICODE);
 }
 
-// если не удается обновить товар, сообщим пользователю 
+// если не удается обновить базу, сообщим пользователю 
 else {
 
     // код ответа - 503 Сервис не доступен 
     http_response_code(503);
 
     // сообщение пользователю 
-    echo json_encode(array("message" => "Невозможно обновить товар."), JSON_UNESCAPED_UNICODE);
+    echo json_encode(array("message" => "Невозможно обновить базу данных."), JSON_UNESCAPED_UNICODE);
 }
 ?>

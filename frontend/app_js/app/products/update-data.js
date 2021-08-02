@@ -2,8 +2,6 @@ jQuery(function($){
 
     // будет работать, если была нажата кнопка обновления 
     $(document).on('click', '.update-data-button', function(){
-        // получение ID товара 
-//        var product_id = $(this).attr('data-id');
 
     // bootbox для подтверждения во всплывающем окне 
     bootbox.confirm({
@@ -30,7 +28,7 @@ jQuery(function($){
 //                data : JSON.stringify({ id: product_id }),
                 success : function(result) {
         
-                    // покажем список всех товаров 
+                    // отображаем данные 
                     showProducts();
                 },
                 error: function(xhr, resp, text) {
@@ -38,8 +36,8 @@ jQuery(function($){
                 }
             });
         
-        }    }
+        }    
+    }
 });
-
-    });
+});
 });

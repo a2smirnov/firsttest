@@ -6,8 +6,8 @@ CREATE TABLE `covidcounter` (
     `country_code` char(3) NOT NULL,
     `confirmed` integer NOT NULL,
     `deaths` integer NOT NULL,
-    `stringency_actual` integer,
-    `stringency` integer,    
+    `stringency_actual` float,
+    `stringency` float,    
     `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX stat_by_country (date_value,country_code)
