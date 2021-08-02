@@ -41,8 +41,8 @@ if ($num>0) {
         extract($row);
 
         $trackerdata_item=array(
+            "date_value" => $date_value,
             "country_code" => $country_code,
-            "name" => $name,
             "confirmed" => $confirmed,
             "deaths" => $deaths,
             "stringency_actual" => $stringency_actual,

@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // подключаем файл для работы с БД и объектом Product 
 include_once '../config/database.php';
-include_once '../objects/product.php';
+include_once '../objects/trackerdata.php';
 
 // получаем соединение с базой данных 
 $database = new Database();
@@ -21,13 +21,7 @@ $trackerdata = new TrackerData($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // установим id свойства товара для редактирования 
-$trackerdata->id = $data->id;
-
-// установим значения свойств товара 
-$trackerdata->name = $data->name;
-$trackerdata->price = $data->price;
-$trackerdata->description = $data->description;
-$trackerdata->category_id = $data->category_id;
+//$trackerdata->id = $data->id;
 
 // обновление товара 
 if ($trackerdata->update()) {
