@@ -22,7 +22,8 @@ jQuery(function($){
 
             // отправим запрос на обновление в API / удаленный сервер 
             $.ajax({
-                url: "http://localhost:8081/api/trackerdata/delete.php",
+//                url: "http://localhost:8081/api/trackerdata/delete.php",
+                url: config.api_url+"delete.php",
                 type : "POST",
                 success : function(result) {
         

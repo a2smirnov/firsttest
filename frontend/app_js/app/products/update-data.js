@@ -22,7 +22,8 @@ jQuery(function($){
 
             // отправим запрос на обновление в API / удаленный сервер 
             $.ajax({
-                url: "http://localhost:8081/api/trackerdata/update.php",
+//                url: "http://localhost:8081/api/trackerdata/update.php",
+                url: config.api_url+"update.php",
                 type : "POST",
 //                dataType : 'json',
 //                data : JSON.stringify({ id: product_id }),

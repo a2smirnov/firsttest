@@ -1,17 +1,21 @@
 <?php
 class Database {
 
-    // укажите свои учетные данные базы данных 
-    private $host = "localhost";
-    private $db_name = "api_db";
-    private $username = "admin";
-    private $password = "admin";
+    // учетные данные базы данных берем из файла конфигурации
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
     public $conn;
 
     // получаем соединение с БД 
     public function getConnection(){
-
+        $config = parse_ini_file("../config/settings.ini", true);
         $this->conn = null;
+        $this->host = $config[DB][host];
+        $this->db_name = $config[DB][db_name];
+        $this->username = $config[DB][username];
+        $this->password = $config[DB][password];
 
         try {
             $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
