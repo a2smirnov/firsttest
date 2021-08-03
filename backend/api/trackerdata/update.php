@@ -17,17 +17,6 @@ $db = $database->getConnection();
 // подготовка объекта 
 $trackerdata = new TrackerData($db);
 
-// получаем id товара для редактирования 
-//$data = json_decode(file_get_contents("php://input"));
-
-// установим id свойства товара для редактирования 
-//$trackerdata->id = $data->id;
-
-// обновление данных
-//$all_good = true;
-//$dataset = $trackerdata->update();
-
-
 if ($dataset = $trackerdata->update()) {
 
     // установим код ответа - 200 ok 

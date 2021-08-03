@@ -42,6 +42,8 @@ function create(){
 }
 // метод update() - обновление данных в таблице
 function update(){
+    //удаляем существующие данные перед обновлением
+    $this->delete();
     //читаем данные из https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/2021-05-20/2021-05-20
     $data_source_full = $this->data_source."/2021-05-20/2021-05-21";
     ini_set("allow_url_fopen", 1);
@@ -52,8 +54,6 @@ function update(){
         foreach ($obj->data as $data => $values) {
             foreach ($values as $country => $country_data) {
                 if (in_array($country, $this->countries)) {
-//                      var_dump($country_data);
-//                    echo("Дата: ".$data." Страна: ".$country." Число смертей: ".$country_data->deaths);
                 $query .= "('".$data."', '".$country."', ".$country_data->confirmed.", ".$country_data->deaths.", ".$country_data->stringency_actual.", ".$country_data->stringency."),";
                 }
             }
@@ -61,13 +61,9 @@ function update(){
       }
     //Удаляем лишнюю запятую в конце запроса
     $query = substr($query,0,-1);
-//    var_dump($query);
     // подготовка запроса 
     $stmt = $this->conn->prepare($query);
     // выполняем запрос 
-//    $stmt->execute();
-// заглушка
-//    var_dump($stmt);
     return $stmt->execute();
 }
 // метод delete - удаление данных их таблицы 
