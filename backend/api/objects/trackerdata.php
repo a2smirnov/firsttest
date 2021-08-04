@@ -62,10 +62,34 @@ function create(){
 }
 // метод update() - обновление данных в таблице
 function update(){
-    //удаляем существующие данные перед обновлением
-    $this->delete();
-    //читаем данные из api
-    $data_source_full = $this->data_source."/2021-05-20/2021-05-21";
+    $start_date='2021-01-01';
+    $end_date=date('Y-m-d');
+    //получаем дату актуальности данных в базе
+    $query = "SELECT `date_value` FROM `".$this->table_name."` ORDER BY `date_value` DESC LIMIT 1";
+    $stmt = $this->conn->prepare($query);
+    if ($stmt->execute()) {
+        $num = $stmt->rowCount();
+        if ($num>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $start_date = $row["date_value"];
+            echo("Update: last day data found! ".$start_date);
+        }
+    }
+    //удаляем данные последнего дня (возможно они были изменены после последнего забора)
+    $query = "DELETE FROM `".$this->table_name."` WERE `date_value`= str_to_date(?, '%Y-%m-%d')";
+    // подготовка запроса 
+    $stmt = $this->conn->prepare($query);
+    // привязываем дату
+    $stmt->bindParam(1, $start_date);
+    // выполняем запрос 
+    if ($stmt->execute()) {
+        echo("Update: last day data deleted!");
+    }
+
+//  удаляем все существующие данные перед обновлением
+//    $this->delete();
+    //читаем ранее не считанные данные из api
+    $data_source_full = $this->data_source."/".$start_date."/".$end_date;
     ini_set("allow_url_fopen", 1);
     $json = file_get_contents($data_source_full);
     $obj = json_decode($json);
@@ -74,7 +98,17 @@ function update(){
         foreach ($obj->data as $data => $values) {
             foreach ($values as $country => $country_data) {
                 if (in_array($country, $this->countries)) {
-                $query .= "('".$data."', '".$country."', ".$country_data->confirmed.", ".$country_data->deaths.", ".$country_data->stringency_actual.", ".$country_data->stringency."),";
+                    if (is_null($country_data->stringency)) {
+                        $stringency="NULL";
+                    } else {
+                        $stringency=$country_data->stringency;
+                    }
+                    if (is_null($country_data->stringency_actual)) {
+                        $stringency_actual="NULL";
+                    } else {
+                        $stringency_actual=$country_data->stringency_actual;
+                    }                    
+                $query .= "('".$data."', '".$country."', ".$country_data->confirmed.", ".$country_data->deaths.", ".$stringency_actual.", ".$stringency."),";
                 }
             }
 

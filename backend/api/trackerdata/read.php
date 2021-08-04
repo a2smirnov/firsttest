@@ -1,6 +1,8 @@
 <?php
 // необходимые HTTP-заголовки 
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: access");
+header("Access-Control-Allow-Methods: GET");
 header("Content-Type: application/json; charset=UTF-8");
 
 // подключение базы данных и файл, содержащий объекты 
@@ -14,13 +16,8 @@ $db = $database->getConnection();
 // инициализируем объект 
 $trackerdata = new TrackerData($db);
  
-// получаем дату для запроса статистики 
-//$data = json_decode(file_get_contents("php://input"));
-$data_tmp = "2021-05-20";
-
 // установим дату для запроса 
-//$trackerdata->date_value = $data->date_value;
-$trackerdata->date_value = $data_tmp;
+$trackerdata->date_value = isset($_GET['requested_date']) ? $_GET['requested_date'] : date('Y-m-d');
 
 // запрашиваем статистику 
 $stmt = $trackerdata->read();

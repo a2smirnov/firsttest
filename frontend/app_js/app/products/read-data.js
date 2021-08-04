@@ -24,9 +24,10 @@ function showProducts(){
         </button>`;
     $("#page-content").html(read_data_html);
 
-    // получить список товаров из API 
-//    $.getJSON("http://localhost:8081/api/trackerdata/read.php", function(data){
-    $.getJSON(config.api_url+"read.php", function(data){
+    // получить данные на дату из API 
+    var reqested_date = '2021-08-01';
+//    alert(config.api_url+"read.php?requested_date=" + reqested_date);
+    $.getJSON(config.api_url+"read.php?requested_date=" + reqested_date, function(data){
     // html for listing products 
         // перебор списка возвращаемых данных 
         var temp=`<!-- начало таблицы -->
