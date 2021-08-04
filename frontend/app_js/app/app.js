@@ -1,12 +1,21 @@
 jQuery(function($){
 
     // HTML приложения 
+    // получаем текущую дату в формате YYYY/MM/DD
+  var now = new Date();
+  var formated_date = now.getFullYear()+"-"+('0' + (now.getMonth() + 1)).slice(-2)+"-"+('0' + now.getDate()).slice(-2);
     var app_html=`
         <div class='container'>
 
             <div class='page-header'>
-                <h1 id='page-title'>Данные трекера</h1>
+                <h1 id='page-title'>Данные трекера covidtracker.bsg.ox.ac.uk</h1>
             </div>
+
+            <!-- здесь будет календарь для выбора дат -->
+            <div></br>
+            <h3>Выберите дату</h3>
+            <input type="text" id="datepicker" value="`+formated_date+`" onchange=showTrackerData();>
+            </br></div>
 
             <!-- здесь будет показано содержимое -->
             <div id='page-content'></div>

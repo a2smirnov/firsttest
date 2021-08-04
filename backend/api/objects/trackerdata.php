@@ -65,25 +65,27 @@ function update(){
     $start_date='2021-01-01';
     $end_date=date('Y-m-d');
     //получаем дату актуальности данных в базе
-    $query = "SELECT `date_value` FROM `".$this->table_name."` ORDER BY `date_value` DESC LIMIT 1";
+    $query = "SELECT date_value FROM ".$this->table_name." ORDER BY date_value DESC LIMIT 1";
     $stmt = $this->conn->prepare($query);
     if ($stmt->execute()) {
         $num = $stmt->rowCount();
         if ($num>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $start_date = $row["date_value"];
-            echo("Update: last day data found! ".$start_date);
+//            echo("Update: last day data found! ".$start_date);
         }
     }
     //удаляем данные последнего дня (возможно они были изменены после последнего забора)
-    $query = "DELETE FROM `".$this->table_name."` WERE `date_value`= str_to_date(?, '%Y-%m-%d')";
+    $query = "DELETE FROM ".$this->table_name." WHERE date_value=str_to_date(?, '%Y-%m-%d')";
     // подготовка запроса 
     $stmt = $this->conn->prepare($query);
     // привязываем дату
     $stmt->bindParam(1, $start_date);
     // выполняем запрос 
     if ($stmt->execute()) {
-        echo("Update: last day data deleted!");
+//        echo("Update: last day data deleted!");
+    } else {
+//        echo("Last day deletion failed ".$query);
     }
 
 //  удаляем все существующие данные перед обновлением

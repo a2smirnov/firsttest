@@ -1,34 +1,43 @@
 jQuery(function($){
 
-    // показать список товаров при первой загрузке 
-    showProducts();
-    // при нажатии кнопки 
-    $(document).on('click', '.read-data-button', function(){
-        showProducts();
+    // вставляем календарь с ограничением диапазона дат от 01 января текущего года по текущую дату
+    $("#datepicker").datepicker({
+    minDate: new Date(new Date().getFullYear(), 1 - 1, 1),
+    maxDate: new Date(),
+    dateFormat: "yy-mm-dd"
     });
+    // показать список на текущую дату при первой загрузке 
+    showTrackerData();
+    // далее обновление списка при выборе даты 
+    $(document).on('change', '.datepicker', function(){
+        showTrackerData();
+    });
+//    $(document).on('click', '.read-data-button', function(){
+//        showTrackerData();
+//    });
 
 });
 
-// функция для показа списка товаров 
-function showProducts(){
+// функция для вывода данных трекера 
+function showTrackerData(){
 
     read_data_html=`
     <!-- кнопки 'действий' -->
     <!-- кнопка обновления данных -->
         <button class='btn btn-primary update-data-button'>
-            <span class='glyphicon glyphicon-edit'></span> Обновление
+            <span class='glyphicon glyphicon-edit'></span> Обновление данных в БД
         </button>
     <!-- кнопка удаления данных -->
         <button class='btn btn-danger m-r-10px delete-data-button'>
-            <span class='glyphicon glyphicon-remove'></span> Удаление
+            <span class='glyphicon glyphicon-remove'></span> Удаление данных из БД
         </button>`;
     $("#page-content").html(read_data_html);
 
     // получить данные на дату из API 
-    var reqested_date = '2021-08-01';
+    var reqested_date = $("#datepicker").datepicker().val();
 //    alert(config.api_url+"read.php?requested_date=" + reqested_date);
     $.getJSON(config.api_url+"read.php?requested_date=" + reqested_date, function(data){
-    // html for listing products 
+    // html таблица для данных 
         // перебор списка возвращаемых данных 
         var temp=`<!-- начало таблицы -->
         <table class='table table-bordered table-hover'>
@@ -57,8 +66,4 @@ function showProducts(){
         read_data_html+=`</table>`;
         $("#page-content").html(read_data_html);
     });
-      // изменяем заголовок страницы 
-      changePageTitle("Данные трекера");
-
-
 }

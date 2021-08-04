@@ -30,7 +30,7 @@ jQuery(function($){
                 success : function(result) {
         
                     // отображаем данные 
-                    showProducts();
+                    showTrackerData();
                 },
                 error: function(xhr, resp, text) {
                     console.log(xhr, resp, text);

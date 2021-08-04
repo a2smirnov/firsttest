@@ -52,7 +52,7 @@ if ($num>0) {
     // устанавливаем код ответа - 200 OK 
     http_response_code(200);
 
-    // выводим данные о товаре в формате JSON 
+    // выводим данные в формате JSON 
     echo json_encode($trackerdatas_arr);
 }
 
