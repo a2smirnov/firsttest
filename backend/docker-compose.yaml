@@ -14,7 +14,7 @@ services:
         # монтируем директорию с конфигурацией хоста
             - ./hosts:/etc/nginx/conf.d
         # монтируем директорию с проектом
-            - ./api:/var/www
+            - ./api:/var/www/api
         # nginx должен общаться с php контейнером
         links:
             - php
@@ -24,3 +24,5 @@ services:
             context: .
             args: 
                 - ENV_TYPE=${ENV_TYPE}
+        volumes:
+            - ./api:/var/www/api
