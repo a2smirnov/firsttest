@@ -26,7 +26,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Добавим свой php.ini, можем в нем определять свои значения конфига
 ADD php.ini.${ENV_TYPE} /usr/local/etc/php/conf.d/40-custom.ini
 
-COPY ./api /var/www/api
+COPY ./api /var/www
+
 # Указываем рабочую директорию для PHP
 WORKDIR /var/www
 

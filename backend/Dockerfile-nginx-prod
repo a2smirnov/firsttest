@@ -1,0 +1,6 @@
+FROM nginx:1.21.1
+ARG ENV_TYPE
+#копируем конфигурацию NGINX
+COPY ./hosts /etc/nginx/conf.d
+COPY ./api /var/www/api
+EXPOSE 80/tcp

@@ -5,7 +5,7 @@ version: '3'
 services:
     nginx:
         # используем последний стабильный образ nginx
-        image: nginx:latest
+        image: nginx:1.21.1
         # маршрутизируем порты
         ports:
             - "80:80"

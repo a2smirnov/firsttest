@@ -5,17 +5,19 @@ version: '3'
 services:
     nginx:
         # используем последний стабильный образ nginx
-        image: nginx:latest
+        build:
+            context: .
+            dockerfile: Dockerfile-nginx-${ENV_TYPE}
         # маршрутизируем порты
         ports:
             - "80:80"
         #   - "443:443"
         # монтируем директории, слева директории на основной машине, справа - куда они монтируются в контейнере
-        volumes:
+#        volumes:
         # монтируем директорию с конфигурацией хоста
-            - hosts_conf:/etc/nginx/conf.d
+#            - hosts_conf:/etc/nginx/conf.d
         # монтируем директорию с проектом
-            - app:/var/www/api
+#            - app:/var/www/api
         # nginx должен общаться с php контейнером
         links:
             - php
@@ -25,8 +27,8 @@ services:
             context: .
             args: 
                 - ENV_TYPE=${ENV_TYPE}
-        volumes:
-            - app:/var/www/api
-volumes:
-    hosts_conf:
-    app:
+#        volumes:
+#            - app:/var/www/api
+#volumes:
+#    hosts_conf:
+#    app:
