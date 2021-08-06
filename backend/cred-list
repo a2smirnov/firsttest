@@ -1,0 +1,7 @@
+#!/bin/bash -
+echo "Getting credentials for DB access from terraform"
+pushd ../terraform/
+terraform output -raw credentials > /tmp/tmp123.txt
+popd
+cat /tmp/tmp123.txt >> .env
+echo > /tmp/tmp123.txt

@@ -25,4 +25,8 @@ services:
             dockerfile: Dockerfile-php-${ENV_TYPE}
             args: 
                 - ENV_TYPE=${ENV_TYPE}
+                - DB_HOST=${DB_HOST}
+                - DB_USERNAME=${DB_USERNAME}
+                - DB_PASSWORD=${DB_PASSWORD}
+                - DB_NAME=${DB_NAME}
         container_name: be-php-${ENV_TYPE}

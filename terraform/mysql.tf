@@ -34,10 +34,20 @@ resource "azurerm_mysql_firewall_rule" "mysql-fw-rule1" {
   end_ip_address      = var.mysql-access-from-ip1
 }
 
-#resource "azurerm_mysql_firewall_rule" "mysql-fw-rule2" {
-#  name                = "MySQL_restricted_Access"
-#  resource_group_name = azurerm_resource_group.my-project.name
-#  server_name         = azurerm_mysql_server.mysql-server.name
-#  start_ip_address    = var.mysql-access-from-ip2
-#  end_ip_address      = var.mysql-access-from-ip2
-#}
+resource "azurerm_mysql_firewall_rule" "mysql-fw-rule2" {
+  name                = "MySQL_restricted_Access"
+  resource_group_name = azurerm_resource_group.my-project.name
+  server_name         = azurerm_mysql_server.mysql-server.name
+  start_ip_address    = var.mysql-access-from-ip2
+  end_ip_address      = var.mysql-access-from-ip2
+}
+
+data "template_file" "cred" {
+  template = "${file("${path.module}/cred.tpl")}"
+  vars = {
+    host = "${azurerm_mysql_server.mysql-server.fqdn}"
+    db_name = "${azurerm_mysql_database.mysql-db.name}"
+    db_admin_login = "${azurerm_mysql_server.mysql-server.administrator_login}"
+    db_admin_pass = "${azurerm_mysql_server.mysql-server.administrator_login_password}"
+  }
+}

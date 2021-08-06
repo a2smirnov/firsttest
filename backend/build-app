@@ -8,6 +8,7 @@ then
         "dev"|"prod")
             echo "Building $1"
 	    cp .env-$1 .env
+	    ./cred-list
 	    cp docker-compose-$1.yaml docker-compose.yaml
 	    docker-compose -p ${PWD##*/}-$1 up --build -d
 	    rm .env
