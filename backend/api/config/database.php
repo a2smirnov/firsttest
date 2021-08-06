@@ -10,7 +10,11 @@ class Database {
 
     // получаем соединение с БД 
     public function getConnection(){
+	if isset($_ENV[ENV_TYPE]) {
+        $config = parse_ini_file("../config/settings.".$_ENV[ENV_TYPE], true);
+	} else {
         $config = parse_ini_file("../config/settings.ini", true);
+        }
         $this->conn = null;
         $this->host = $config[DB][host];
         $this->db_name = $config[DB][db_name];

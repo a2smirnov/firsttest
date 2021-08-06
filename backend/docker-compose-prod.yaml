@@ -8,16 +8,13 @@ services:
         build:
             context: .
             dockerfile: Dockerfile-nginx-${ENV_TYPE}
+            args:
+                - ENV_TYPE=${ENV_TYPE}
         # маршрутизируем порты
         ports:
-            - "80:80"
+            - "${ENV_BE_PORT}:80"
         #   - "443:443"
-        # монтируем директории, слева директории на основной машине, справа - куда они монтируются в контейнере
-#        volumes:
-        # монтируем директорию с конфигурацией хоста
-#            - hosts_conf:/etc/nginx/conf.d
-        # монтируем директорию с проектом
-#            - app:/var/www/api
+        container_name: be-nginx-${ENV_TYPE}
         # nginx должен общаться с php контейнером
         links:
             - php
@@ -25,10 +22,7 @@ services:
         # собираем PHP из Dockerfile в текущей папке с указанием типа среды dev или prod из файла .env
         build: 
             context: .
+            dockerfile: Dockerfile-php-${ENV_TYPE}
             args: 
                 - ENV_TYPE=${ENV_TYPE}
-#        volumes:
-#            - app:/var/www/api
-#volumes:
-#    hosts_conf:
-#    app:
+        container_name: be-php-${ENV_TYPE}

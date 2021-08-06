@@ -12,9 +12,6 @@ jQuery(function($){
     $(document).on('change', '.datepicker', function(){
         showTrackerData();
     });
-//    $(document).on('click', '.read-data-button', function(){
-//        showTrackerData();
-//    });
 
 });
 
@@ -27,15 +24,18 @@ function showTrackerData(){
         <button class='btn btn-primary update-data-button'>
             <span class='glyphicon glyphicon-edit'></span> Обновление данных в БД
         </button>
-    <!-- кнопка удаления данных -->
+    <!-- кнопка создания таблицы -->
+        <button class='btn btn-danger create-data-button'>
+            <span class='glyphicon glyphicon-edit'></span> Создание таблицы в БД
+        </button>
+    <!-- кнопка удаления данных из таблицы-->
         <button class='btn btn-danger m-r-10px delete-data-button'>
-            <span class='glyphicon glyphicon-remove'></span> Удаление данных из БД
+            <span class='glyphicon glyphicon-remove'></span> Удаление данных из таблицы
         </button>`;
     $("#page-content").html(read_data_html);
 
     // получить данные на дату из API 
     var reqested_date = $("#datepicker").datepicker().val();
-//    alert(config.api_url+"read.php?requested_date=" + reqested_date);
     $.getJSON(config.api_url+"read.php?requested_date=" + reqested_date, function(data){
     // html таблица для данных 
         // перебор списка возвращаемых данных 

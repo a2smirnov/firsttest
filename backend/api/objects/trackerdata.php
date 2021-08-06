@@ -13,7 +13,11 @@ class TrackerData {
 
     // конструктор для соединения с базой данных 
     public function __construct($db){
+        if isset($_ENV[ENV_TYPE]) {
+        $config = parse_ini_file("../config/settings.".$_ENV[ENV_TYPE], true);
+        } else {
         $config = parse_ini_file("../config/settings.ini", true);
+        }
         $this->conn = $db;
         $this->table_name = $config[DB][table_name];
         $this->db_engine = $config[DB][engine];

@@ -1,0 +1,25 @@
+#!/bin/bash -
+#Building project for different environments
+
+if [ $# -eq 1 ]
+then
+    echo "Trying to build application for $1 environment"
+    case "$1" in
+        "dev"|"prod")
+            echo "Building $1"
+	    cp .env-$1 .env
+	    cp docker-compose-$1.yaml docker-compose.yaml
+	    docker-compose -p ${PWD##*/}-$1 up --build -d
+	    rm .env
+	    rm docker-compose.yaml
+	    ;;
+        *) 
+	    echo "Wrong parameter '$1'"
+        echo "Usage: build-app 'build-type'"
+	echo "where build-type = dev or prod"
+	    ;;
+    esac
+else
+        echo "Usage: build-app 'build-type'"
+	echo "where build-type = dev or prod"
+fi;

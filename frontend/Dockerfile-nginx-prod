@@ -3,4 +3,4 @@ ARG ENV_TYPE
 ENV ENV_TYPE=${ENV_TYPE}
 #копируем конфигурацию NGINX
 COPY ./hosts /etc/nginx/conf.d
-COPY ./api /var/www/api
+COPY ./app_js /var/www/fe

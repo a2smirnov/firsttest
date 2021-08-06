@@ -1,7 +1,7 @@
 jQuery(function($){
 
-    // будет работать, если была нажата кнопка обновления 
-    $(document).on('click', '.update-data-button', function(){
+    // будет работать, если была нажата кнопка создания таблицы
+    $(document).on('click', '.create-data-button', function(){
 
     // bootbox для подтверждения во всплывающем окне 
     bootbox.confirm({
@@ -22,7 +22,7 @@ jQuery(function($){
 
             // отправим запрос на обновление в API / удаленный сервер 
             $.ajax({
-                url: config.api_url+"update.php",
+                url: config.api_url+"create.php",
                 type : "POST",
                 success : function(result) {
         

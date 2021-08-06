@@ -1,6 +1,7 @@
 # Для начала указываем исходный образ, он будет использован как основа
 FROM php:7.4-fpm
 ARG ENV_TYPE
+ENV ENV_TYPE=${ENV_TYPE}
 # RUN выполняет идущую за ней команду в контексте нашего образа.
 # В данном случае мы установим некоторые зависимости и модули PHP.
 # Для установки модулей используем команду docker-php-ext-install.
@@ -26,7 +27,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Добавим свой php.ini, можем в нем определять свои значения конфига
 ADD php.ini.${ENV_TYPE} /usr/local/etc/php/conf.d/40-custom.ini
 
-COPY ./api /var/www/api
+# В dev-окружении используем bind mount в композере для каталога с кодом
+
 # Указываем рабочую директорию для PHP
 WORKDIR /var/www
 
