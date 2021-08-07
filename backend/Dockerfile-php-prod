@@ -29,7 +29,8 @@ ENV ENV_TYPE=${ENV_TYPE}
 # Добавим свой php.ini, можем в нем определять свои значения конфига
 ADD php.ini.${ENV_TYPE} /usr/local/etc/php/conf.d/40-custom.ini
 
-COPY ./api /var/www
+# Копируем исходники в контейнер
+COPY ./api /var/www/api
 
 ARG DB_HOST
 ARG DB_USERNAME

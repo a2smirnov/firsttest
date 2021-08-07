@@ -1,8 +1,10 @@
 jQuery(function($){
 
     // HTML приложения 
-    // получаем текущую дату в формате YYYY/MM/DD
+    // получаем вчерашнюю дату (на текущую дату в трекере данных точно нет) в формате YYYY/MM/DD
+    // используем ее как стартовую
   var now = new Date();
+  now.setDate(now.getDate() - 1);
   var formated_date = now.getFullYear()+"-"+('0' + (now.getMonth() + 1)).slice(-2)+"-"+('0' + now.getDate()).slice(-2);
     var app_html=`
         <div class='container'>

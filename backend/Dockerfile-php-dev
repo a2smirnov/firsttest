@@ -37,7 +37,7 @@ ENV DB_USERNAME=${DB_USERNAME}
 ENV DB_PASSWORD=${DB_PASSWORD}
 ENV DB_NAME=${DB_NAME}
 
-# В dev-окружении используем bind mount в композере для каталога с кодом
+# В dev-окружении используем bind mount в композере для подключения каталога с исходниками
 
 # Указываем рабочую директорию для PHP
 WORKDIR /var/www

@@ -13,8 +13,8 @@ class TrackerData {
 
     // конструктор для соединения с базой данных 
     public function __construct($db){
-        if (isset($_ENV[ENV_TYPE])) {
-        $config = parse_ini_file("../config/settings.".$_ENV[ENV_TYPE], true);
+        if (getenv('ENV_TYPE', true)) {
+            $config = parse_ini_file("../config/settings.".getenv('ENV_TYPE', true), true);
         } else {
         $config = parse_ini_file("../config/settings.ini", true);
         }

@@ -27,7 +27,7 @@ resource "azurerm_mysql_database" "mysql-db" {
 }
 
 resource "azurerm_mysql_firewall_rule" "mysql-fw-rule1" {
-  name                = "MySQL_restricted_Access"
+  name                = "MySQL_access_point_1"
   resource_group_name = azurerm_resource_group.my-project.name
   server_name         = azurerm_mysql_server.mysql-server.name
   start_ip_address    = var.mysql-access-from-ip1
@@ -35,7 +35,7 @@ resource "azurerm_mysql_firewall_rule" "mysql-fw-rule1" {
 }
 
 resource "azurerm_mysql_firewall_rule" "mysql-fw-rule2" {
-  name                = "MySQL_restricted_Access"
+  name                = "MySQL_access_point_2"
   resource_group_name = azurerm_resource_group.my-project.name
   server_name         = azurerm_mysql_server.mysql-server.name
   start_ip_address    = var.mysql-access-from-ip2

@@ -4,6 +4,7 @@ version: '3'
 # Список наших сервисов (контейнеров)
 services:
     nginx:
+        # собираем nginx из Dockerfile-nginx-... в текущей папке с указанием типа среды dev или prod из файла .env
         build:
             context: .
             dockerfile: Dockerfile-nginx-${ENV_TYPE}

@@ -63,7 +63,9 @@ function showTrackerData(){
 
         // вставка в 'page-content' нашего приложения 
         read_data_html+=temp;
-        read_data_html+=`</table>`;
+        read_data_html+=`</table><BR>`;
+        //выводим тип среды
+        read_data_html+=config.env_type;
         $("#page-content").html(read_data_html);
     });
 }
