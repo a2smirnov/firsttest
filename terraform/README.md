@@ -10,5 +10,5 @@
 #    echo "$(terraform output -raw kube_config)" > ./azurek8s
 #    export KUBECONFIG=./azurek8s
 #    kubectl get nodes
-#
+#    kubectl get all --all-namespaces
 # Aleksei Smirnov
