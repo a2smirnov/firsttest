@@ -1,3 +1,13 @@
+#general vars
+variable resource_group_name {
+    default = "as-cicd-task"
+}
+
+variable location {
+    default = "West Europe"
+}
+
+#MySQL vars
 variable "mysql-admin-login" {
   type = string
   description = "Login to authenticate to MySQL Server"

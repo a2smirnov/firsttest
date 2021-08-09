@@ -12,9 +12,7 @@ provider "azurerm" {
 }
 
 # Create a resource group
-resource "azurerm_resource_group" "my-project" {
-  name     = "my-project-resources"
-  location = "West Europe"
+resource "azurerm_resource_group" "as-cicd-task" {
+  name     = var.resource_group_name
+  location = var.location
 }
-
-

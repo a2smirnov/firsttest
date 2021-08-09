@@ -16,11 +16,11 @@ then
 	    ;;
         *) 
 	    echo "Wrong parameter '$1'"
-        echo "Usage: build-app 'build-type'"
+        echo "Usage: build-back 'build-type'"
 	echo "where build-type = dev or prod"
 	    ;;
     esac
 else
-        echo "Usage: build-app 'build-type'"
+        echo "Usage: build-back 'build-type'"
 	echo "where build-type = dev or prod"
 fi;

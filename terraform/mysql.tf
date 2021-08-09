@@ -1,7 +1,7 @@
-resource "azurerm_mysql_server" "mysql-server" {
-  name = "my-project-mysqlserver"
-  location = azurerm_resource_group.my-project.location
-  resource_group_name = azurerm_resource_group.my-project.name
+resource "azurerm_mysql_server" "as-cicd-dbserver" {
+  name = "as-cicd-dbserver"
+  resource_group_name = var.resource_group_name
+  location = var.location
  
   administrator_login = var.mysql-admin-login
   administrator_login_password = var.mysql-admin-password
@@ -18,26 +18,26 @@ resource "azurerm_mysql_server" "mysql-server" {
   ssl_enforcement_enabled = false
 }
 
-resource "azurerm_mysql_database" "mysql-db" {
+resource "azurerm_mysql_database" "api_db" {
   name                = "api_db"
-  resource_group_name = azurerm_resource_group.my-project.name
-  server_name         = azurerm_mysql_server.mysql-server.name
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_mysql_server.as-cicd-dbserver.name
   charset             = "utf8"
   collation           = "utf8_unicode_ci"
 }
 
 resource "azurerm_mysql_firewall_rule" "mysql-fw-rule1" {
   name                = "MySQL_access_point_1"
-  resource_group_name = azurerm_resource_group.my-project.name
-  server_name         = azurerm_mysql_server.mysql-server.name
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_mysql_server.as-cicd-dbserver.name
   start_ip_address    = var.mysql-access-from-ip1
   end_ip_address      = var.mysql-access-from-ip1
 }
 
 resource "azurerm_mysql_firewall_rule" "mysql-fw-rule2" {
   name                = "MySQL_access_point_2"
-  resource_group_name = azurerm_resource_group.my-project.name
-  server_name         = azurerm_mysql_server.mysql-server.name
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_mysql_server.as-cicd-dbserver.name
   start_ip_address    = var.mysql-access-from-ip2
   end_ip_address      = var.mysql-access-from-ip2
 }
@@ -45,9 +45,9 @@ resource "azurerm_mysql_firewall_rule" "mysql-fw-rule2" {
 data "template_file" "cred" {
   template = "${file("${path.module}/cred.tpl")}"
   vars = {
-    host = "${azurerm_mysql_server.mysql-server.fqdn}"
-    db_name = "${azurerm_mysql_database.mysql-db.name}"
-    db_admin_login = "${azurerm_mysql_server.mysql-server.administrator_login}"
-    db_admin_pass = "${azurerm_mysql_server.mysql-server.administrator_login_password}"
+    host = "${azurerm_mysql_server.as-cicd-dbserver.fqdn}"
+    db_name = "${azurerm_mysql_database.api_db.name}"
+    db_admin_login = "${azurerm_mysql_server.as-cicd-dbserver.administrator_login}"
+    db_admin_pass = "${azurerm_mysql_server.as-cicd-dbserver.administrator_login_password}"
   }
 }

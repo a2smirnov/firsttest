@@ -1,0 +1,30 @@
+#!/bin/bash -
+if [ $# -eq 1 ]
+then
+    echo "Trying to build application for $1 environment"
+    case "$1" in
+        "dev"|"prod")
+            echo "Pushing $1 to cloud registry"
+	    echo "Getting credentials for ACR access from terraform"
+	    pushd ../terraform/
+	    acr_server=$(terraform output -raw acr_login_server)
+	    acr_username=$(terraform output -raw acr_admin_username)
+	    acr_password=$(terraform output -raw acr_admin_password)
+	    popd
+	    docker login -u $acr_username -p $acr_password $acr_server
+	    echo "Pushing image fe-nginx-$1"
+	    docker image tag fe-nginx-$1:latest $acr_server/$acr_username/fe-nginx-$1:latest
+	    docker image push $acr_server/$acr_username/fe-nginx-$1:latest
+            ;;
+        *)
+            echo "Wrong parameter '$1'"
+        echo "Usage: cloud-front-push 'build-type'"
+        echo "where build-type = dev or prod"
+            ;;
+    esac
+else
+        echo "Usage: cloud-front-push 'build-type'"
+        echo "where build-type = dev or prod"
+fi;
+
+
