@@ -39,3 +39,7 @@ variable "mysql-access-from-ip2" {
   type = string
   description = "Allowed source IP address"
 }
+variable "mysql-access-from-ip3" {
+  type = string
+  description = "Allowed source IP address"
+}

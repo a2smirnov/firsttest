@@ -7,3 +7,6 @@ mysql-sku-name       = "B_Gen5_1"
 mysql-storage        = "5120"
 mysql-access-from-ip1 = "87.249.236.234"
 mysql-access-from-ip2 = "92.241.229.135"
+mysql-access-from-ip3 = "0.0.0.0"
+vm_size              = "standard_a2_v2"
+agent_count          = 1

@@ -12,12 +12,12 @@ then
 	    acr_password=$(terraform output -raw acr_admin_password)
 	    popd
 	    docker login -u $acr_username -p $acr_password $acr_server
-	    echo "Pushing image backend-$1_nginx"
-	    docker image tag backend-$1_nginx:latest $acr_server/$acr_username/backend-$1_nginx:latest
-	    docker image push $acr_server/$acr_username/backend-$1_nginx:latest
-	    echo "Pushing image backend-$1_php"
-	    docker image tag backend-$1_php:latest $acr_server/$acr_username/backend-$1_php:latest
-	    docker image push $acr_server/$acr_username/backend-$1_php:latest
+	    echo "Pushing image be-nginx-$1"
+	    docker image tag be-nginx-$1:latest $acr_server/$acr_username/be-nginx-$1:latest
+	    docker image push $acr_server/$acr_username/be-nginx-$1:latest
+	    echo "Pushing image be-php-$1"
+	    docker image tag be-php-$1:latest $acr_server/$acr_username/be-php-$1:latest
+	    docker image push $acr_server/$acr_username/be-php-$1:latest
             ;;
         *)
             echo "Wrong parameter '$1'"

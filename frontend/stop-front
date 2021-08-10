@@ -1,0 +1,26 @@
+#!/bin/bash -
+#Clearing project's containers for different environments
+
+if [ $# -eq 1 ]
+then
+    echo "Trying to remove frontend for $1 environment"
+    case "$1" in
+        "dev"|"prod")
+            echo "Removing $1"
+	    cp .env-$1 .env
+#	    cp app_js/app/config/settings.js-$1 app_js/app/config/settings.js
+	    cp docker-compose-$1.yaml docker-compose.yaml
+	    docker-compose -p ${PWD##*/}-$1 down
+	    rm .env
+	    rm docker-compose.yaml
+	    ;;
+        *) 
+	    echo "Wrong parameter '$1'"
+        echo "Usage: stop-front 'stop-type'"
+	echo "where stop-type = dev or prod"
+	    ;;
+    esac
+else
+        echo "Usage: stop-front 'stop-type'"
+	echo "where stop-type = dev or prod"
+fi;

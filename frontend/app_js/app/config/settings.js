@@ -1,5 +1,5 @@
+var currentLocation = window.location;
 var config={
-  api_url: 'http://localhost:8080/trackerdata/',
+  api_url: currentLocation.protocol+'//'+currentLocation.hostname+':8080/trackerdata/',
   env_type: 'prod'
-
 };
