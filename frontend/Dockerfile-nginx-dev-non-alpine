@@ -1,4 +1,4 @@
-FROM nginx:1.21.1-alpine
+FROM nginx:1.21.1
 ARG ENV_TYPE
 ENV ENV_TYPE=${ENV_TYPE}
 #копируем конфигурацию NGINX

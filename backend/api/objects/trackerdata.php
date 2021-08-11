@@ -19,11 +19,11 @@ class TrackerData {
         $config = parse_ini_file("../config/settings.ini", true);
         }
         $this->conn = $db;
-        $this->table_name = $config[DB][table_name];
-        $this->db_engine = $config[DB][engine];
-        $this->db_charset = $config[DB][charset];
-        $this->data_source = $config[API][data_source];
-        $this->countries = $config[API][countries];
+        $this->table_name = $config['DB']['table_name'];
+        $this->db_engine = $config['DB']['engine'];
+        $this->db_charset = $config['DB']['charset'];
+        $this->data_source = $config['API']['data_source'];
+        $this->countries = $config['API']['countries'];
     }
 
     // метод read() - получение данных

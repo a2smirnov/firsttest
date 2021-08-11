@@ -1,6 +1,6 @@
-FROM nginx:1.21.1-alpine
+FROM nginx:1.21.1
 ARG ENV_TYPE
 ENV ENV_TYPE=${ENV_TYPE}
 #копируем конфигурацию NGINX
 #COPY ./hosts /etc/nginx/conf.d
-#COPY ./app_js /var/www/fe
+#COPY ./api /var/www/api

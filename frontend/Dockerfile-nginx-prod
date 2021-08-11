@@ -1,4 +1,4 @@
-FROM nginx:1.21.1
+FROM nginx:1.21.1-alpine
 ARG ENV_TYPE
 ENV ENV_TYPE=${ENV_TYPE}
 #убираем дефолтную конфигурацию

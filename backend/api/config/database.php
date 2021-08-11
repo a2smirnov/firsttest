@@ -20,10 +20,6 @@ class Database {
         $this->db_name = getenv('DB_NAME', true);
         $this->username = getenv('DB_USERNAME', true);
         $this->password = getenv('DB_PASSWORD', true);
-//        $this->host = $config[DB][host];
-//        $this->db_name = $config[DB][db_name];
-//        $this->username = $config[DB][username];
-//        $this->password = $config[DB][password];
 
         try {
             $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
