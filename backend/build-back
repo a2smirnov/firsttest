@@ -10,7 +10,8 @@ then
 	    cp .env-$1 .env
 	    ./cred-list
 	    cp docker-compose-$1.yaml docker-compose.yaml
-	    docker-compose -p ${PWD##*/}-$1 up --build -d
+	    docker-compose -p ${PWD##*/}-$1 build
+	    cat .env
 	    rm .env
 	    rm docker-compose.yaml
 	    ;;

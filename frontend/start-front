@@ -3,14 +3,14 @@
 
 if [ $# -eq 1 ]
 then
-    echo "Trying to build frontend for $1 environment"
+    echo "Trying to start frontend for $1 environment locally"
     case "$1" in
         "dev"|"prod")
             echo "Building $1"
 	    cp .env-$1 .env
 	    cp app_js/app/config/settings.js-$1 app_js/app/config/settings.js
 	    cp docker-compose-$1.yaml docker-compose.yaml
-	    docker-compose -p ${PWD##*/}-$1 build
+	    docker-compose -p ${PWD##*/}-$1 up --build -d
 	    rm .env
 	    rm docker-compose.yaml
 	    ;;
