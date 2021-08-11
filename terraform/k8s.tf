@@ -21,6 +21,11 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     identity {
 	type	= "SystemAssigned"
     }
+    addon_profile {
+	http_application_routing {
+	    enabled = true
+	}
+    }
 
     role_based_access_control {
 	enabled = true

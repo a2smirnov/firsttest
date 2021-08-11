@@ -1,51 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: be-nginx
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: backend
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  minReadySeconds: 5
-  template:
-    metadata:
-      labels:
-        app: backend
-    spec:
-      nodeSelector:
-        "beta.kubernetes.io/os": linux
-      containers:
-      - name: be-nginx-prod
-        image: ascicdacr.azurecr.io/ascicdacr/be-nginx-prod:latest
-        ports:
-        - containerPort: 8080
-          name: backend
-        resources:
-          requests:
-            cpu: 250m
-          limits:
-            cpu: 500m
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: be-nginx
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 8080
-  selector:
-    app: backend
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: be-php
+  name: php
 spec:
   replicas: 1
   selector:
@@ -78,10 +34,57 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: be-php
+  name: php
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-  - port: 9000
+  - name: php
+    port: 9000
   selector:
     app: backend-php
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: be-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: be-nginx-prod
+        image: ascicdacr.azurecr.io/ascicdacr/be-nginx-prod:latest
+        ports:
+        - containerPort: 80
+          name: backend-nginx
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: be-nginx
+spec:
+  type: ClusterIP
+  ports:
+  - name: backend-nginx
+    port: 8080
+    targetPort: 80
+  selector:
+    app: backend
