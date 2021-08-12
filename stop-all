@@ -8,19 +8,19 @@ then
         "prod")
 	    echo "Removing backend containers for $1"
 	    pushd backend
-	    ./stop-back $1
+		./stop-back $1
 	    popd
 	    echo "Removing frontend containers for $1"
 	    pushd frontend
-	    ./stop-front $1
+		./stop-front $1
 	    popd
 	    pushd k8s
-	    rm azurek8s
+		rm azurek8s
 	    popd
             echo "Destroying infrastructure for $1"
 	    pushd terraform
-	    terraform init
-	    terraform destroy -auto-approve
+		terraform init
+		terraform destroy -auto-approve
 	    popd
 	    echo "============================================================"
 	    echo "Application and infrastructure removed"
