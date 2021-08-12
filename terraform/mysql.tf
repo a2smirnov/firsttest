@@ -26,28 +26,13 @@ resource "azurerm_mysql_database" "api_db" {
   collation           = "utf8_unicode_ci"
 }
 
-resource "azurerm_mysql_firewall_rule" "mysql-fw-rule1" {
-  name                = "MySQL_access_point_1"
+resource "azurerm_mysql_firewall_rule" "mysql-fw-rule" {
+  count 	      = length(var.mysql-allowed-ip)
+  name                = "MySQL_access_point_${count.index}"
   resource_group_name = azurerm_resource_group.cicd-task.name
   server_name         = azurerm_mysql_server.as-cicd-dbserver.name
-  start_ip_address    = var.mysql-access-from-ip1
-  end_ip_address      = var.mysql-access-from-ip1
-}
-
-resource "azurerm_mysql_firewall_rule" "mysql-fw-rule2" {
-  name                = "MySQL_access_point_2"
-  resource_group_name = azurerm_resource_group.cicd-task.name
-  server_name         = azurerm_mysql_server.as-cicd-dbserver.name
-  start_ip_address    = var.mysql-access-from-ip2
-  end_ip_address      = var.mysql-access-from-ip2
-}
-
-resource "azurerm_mysql_firewall_rule" "mysql-fw-rule3" {
-  name                = "MySQL_access_point_3"
-  resource_group_name = azurerm_resource_group.cicd-task.name
-  server_name         = azurerm_mysql_server.as-cicd-dbserver.name
-  start_ip_address    = var.mysql-access-from-ip3
-  end_ip_address      = var.mysql-access-from-ip3
+  start_ip_address    = element(var.mysql-allowed-ip, count.index)
+  end_ip_address      = element(var.mysql-allowed-ip, count.index)
 }
 
 data "template_file" "cred" {

@@ -41,7 +41,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     }
 }
 
-# add the role to the identity the kubernetes cluster was assigned
+# add the role to the identity to which kubernetes cluster was assigned
 resource "azurerm_role_assignment" "k8s_to_acr" {
   scope                = azurerm_container_registry.ascicdacr.id
   role_definition_name = "AcrPull"

@@ -1,0 +1,15 @@
+#!/bin/bash -
+#Installing application on k8s cluster
+#Getting k8s config
+pushd ../terraform
+    echo "$(terraform output -raw kube_config)" > ../k8s/azurek8s
+popd
+export KUBECONFIG=./azurek8s
+echo "Setting up application"
+kubectl apply -f app.yaml --prune --all
+echo "Current namespaces:"
+kubectl get all --all-namespaces
+echo "============================================================"
+echo "Use link http://"$(kubectl -n kube-system get svc addon-http-application-routing-nginx-ingress --output jsonpath='{.status.loadBalancer.ingress[0].ip}')" to access web application"
+echo "============================================================"
+

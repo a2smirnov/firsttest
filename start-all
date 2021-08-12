@@ -25,17 +25,7 @@ then
 	    popd
 	    echo "Setting up kubernetes for $1"
 	    pushd k8s
-		export KUBECONFIG=./azurek8s
-		    pushd ../terraform
-			echo "$(terraform output -raw kube_config)" > ../k8s/azurek8s
-		    popd
-		kubectl apply -f frontend.yaml
-		kubectl apply -f backend.yaml
-		kubectl apply -f ingress.yaml
-#	    	kubectl get all --all-namespaces
-		echo "============================================================"
-		echo "Use link http://"$(kubectl -n kube-system get svc addon-http-application-routing-nginx-ingress --output jsonpath='{.status.loadBalancer.ingress[0].ip}')" to access web application"
-		echo "============================================================"
+		./k8start
 	    popd
 	    ;;
         *) 

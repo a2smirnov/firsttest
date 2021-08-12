@@ -1,0 +1,11 @@
+#!/bin/bash -
+#
+#Getting k8s config
+pushd ../terraform
+echo "$(terraform output -raw kube_config)" > ../k8s/azurek8s
+popd
+export KUBECONFIG=./azurek8s
+echo "Removing application"
+kubectl delete -f app.yaml
+echo "Current namespaces:"
+kubectl get all --all-namespaces

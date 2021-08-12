@@ -2,7 +2,6 @@
 variable resource_group_name {
     default = "as-cicd-task"
 }
-
 variable location {
     default = "West Europe"
 }
@@ -31,15 +30,25 @@ variable "mysql-storage" {
   description = "MySQL Storage in MB"
   default = "5120"
 }
-variable "mysql-access-from-ip1" {
-  type = string
-  description = "Allowed source IP address"
+
+variable "mysql-allowed-ip" {
+  type = list(string)
+  default = ["0.0.0.0"]
 }
-variable "mysql-access-from-ip2" {
-  type = string
-  description = "Allowed source IP address"
+
+#k8s vars
+variable "agent_count" {
+    default = 2
 }
-variable "mysql-access-from-ip3" {
-  type = string
-  description = "Allowed source IP address"
+variable "vm_size" {
+    default = "standard_a2_v2"
+}
+variable "ssh_public_key" {
+    default = "~/.ssh/id_rsa.pub"
+}
+variable "dns_prefix" {
+    default = "as-cicd-k8s"
+}
+variable cluster_name {
+    default = "as-cicd-k8s"
 }
