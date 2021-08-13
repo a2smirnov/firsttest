@@ -3,10 +3,10 @@ kind: Deployment
 metadata:
   name: fe-nginx
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
-      app: frontend
+      app: fe-nginx
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       labels:
-        app: frontend
+        app: fe-nginx
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
@@ -39,17 +39,17 @@ spec:
   ports:
   - port: 80
   selector:
-    app: frontend
+    app: fe-nginx
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: php
+  name: be-php
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: backend-php
+      app: be-php
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -58,7 +58,7 @@ spec:
   template:
     metadata:
       labels:
-        app: backend-php
+        app: be-php
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
@@ -84,17 +84,17 @@ spec:
   - name: php
     port: 9000
   selector:
-    app: backend-php
+    app: be-php
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: be-nginx
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: backend
+      app: be-nginx
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -103,7 +103,7 @@ spec:
   template:
     metadata:
       labels:
-        app: backend
+        app: be-nginx
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
@@ -126,11 +126,11 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - name: backend-nginx
+  - name: be-nginx
     port: 8080
     targetPort: 80
   selector:
-    app: backend
+    app: be-nginx
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
