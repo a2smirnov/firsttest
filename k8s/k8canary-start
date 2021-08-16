@@ -1,0 +1,16 @@
+#!/bin/bash -
+#Installing application on k8s cluster (canary)
+#Getting k8s config
+pushd ../terraform
+    echo "$(terraform output -raw kube_config)" > ../k8s/azurek8s
+popd
+export KUBECONFIG=./azurek8s
+echo "Setting up application"
+kubectl create ns canary
+kubectl apply -f canary-app.yaml -n canary --prune --all
+echo "Current namespaces:"
+kubectl get all -n canary
+echo "============================================================"
+echo "Use link http://"$(kubectl -n kube-system get svc addon-http-application-routing-nginx-ingress --output jsonpath='{.status.loadBalancer.ingress[0].ip}')" to access web application"
+echo "============================================================"
+

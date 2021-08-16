@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fe-nginx
+  name: fe-nginx-c
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: fe-nginx
+      app: fe-nginx-c
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -15,13 +15,13 @@ spec:
   template:
     metadata:
       labels:
-        app: fe-nginx
+        app: fe-nginx-c
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: fe-nginx-prod
-        image: ascicdacr.azurecr.io/ascicdacr/fe-nginx-prod:latest
+      - name: fe-nginx-c-prod
+        image: ascicdacr.azurecr.io/ascicdacr/fe-nginx-c-prod:v0.4.0
         ports:
         - containerPort: 80
         resources:
@@ -33,23 +33,23 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fe-nginx
+  name: fe-nginx-c
 spec:
   type: ClusterIP
   ports:
   - port: 80
   selector:
-    app: fe-nginx
+    app: fe-nginx-c
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: be-php
+  name: be-nginx-c
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: be-php
+      app: be-nginx-c
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -58,58 +58,13 @@ spec:
   template:
     metadata:
       labels:
-        app: be-php
+        app: be-nginx-c
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: be-php-prod
-        image: ascicdacr.azurecr.io/ascicdacr/be-php-prod:latest
-        ports:
-        - containerPort: 9000
-          name: php
-        resources:
-          requests:
-            cpu: 250m
-          limits:
-            cpu: 500m
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: php
-spec:
-  type: ClusterIP
-  ports:
-  - name: php
-    port: 9000
-  selector:
-    app: be-php
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: be-nginx
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: be-nginx
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  minReadySeconds: 5
-  template:
-    metadata:
-      labels:
-        app: be-nginx
-    spec:
-      nodeSelector:
-        "beta.kubernetes.io/os": linux
-      containers:
-      - name: be-nginx-prod
-        image: ascicdacr.azurecr.io/ascicdacr/be-nginx-prod:latest
+      - name: be-nginx-c-prod
+        image: ascicdacr.azurecr.io/ascicdacr/be-nginx-c-prod:latest
         ports:
         - containerPort: 80
           name: backend-nginx
@@ -122,27 +77,29 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: be-nginx
+  name: be-nginx-c
 spec:
   type: ClusterIP
   ports:
-  - name: be-nginx
+  - name: be-nginx-c
     port: 8080
     targetPort: 80
   selector:
-    app: be-nginx
+    app: be-nginx-c
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: webrouter
+  name: webrouter-c
   annotations:
     kubernetes.io/ingress.class: addon-http-application-routing
     appgw.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-weight: "50"
 spec:
   defaultBackend:
     service:
-      name: fe-nginx
+      name: fe-nginx-c
       port:
         number: 80
   rules:
@@ -152,13 +109,13 @@ spec:
             pathType: ImplementationSpecific
             backend:
                 service:
-                  name: be-nginx
+                  name: be-nginx-c
                   port:
                     number: 8080
           - path: /
             pathType: ImplementationSpecific
             backend:
                 service:
-                  name: fe-nginx
+                  name: fe-nginx-c
                   port:
                     number: 80
