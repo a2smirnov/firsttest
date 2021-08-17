@@ -1,15 +1,40 @@
 #!/bin/bash -
 #Installing application on k8s cluster
-#Getting k8s config
-pushd ../terraform
-    echo "$(terraform output -raw kube_config)" > ../k8s/azurek8s
-popd
-export KUBECONFIG=./azurek8s
-echo "Setting up application"
-kubectl apply -f app.yaml --prune --all
-echo "Current namespaces:"
-kubectl get all --all-namespaces
-echo "============================================================"
-echo "Use link http://"$(kubectl -n kube-system get svc addon-http-application-routing-nginx-ingress --output jsonpath='{.status.loadBalancer.ingress[0].ip}')" to access web application"
-echo "============================================================"
+if [ $# -eq 1 ]
+then
+    echo "Trying to build application for $1 environment"
+    case "$1" in
+        "dev"|"prod")
+	    #Getting k8s config
+	    pushd ../terraform
+    	    echo "$(terraform output -raw kube_config)" > ../k8s/azurek8s
+	    AZF_SECRET=$(terraform output -raw storage_account_secret)
+	    AZF_ACCOUNT=$(terraform output -raw storage_account_name)
+	    popd
+	    export KUBECONFIG=./azurek8s
+            if [ $1 = "dev" ]
+            then
+	    echo "Creating k8s secret"
+	    kubectl create secret generic azure-secret --from-literal=azurestorageaccountname=$AZF_ACCOUNT --from-literal=azurestorageaccountkey=$AZF_SECRET
+	    fi;
+	    AZF_SECRET=""
+	    AZF_ACCOUNT=""
+	    echo "Setting up application"
+	    kubectl apply -f app-$1.yaml --prune --all
+	    echo "Current namespaces:"
+	    kubectl get all --all-namespaces
+	    echo "============================================================"
+	    echo "Use link http://"$(kubectl -n kube-system get svc addon-http-application-routing-nginx-ingress --output jsonpath='{.status.loadBalancer.ingress[0].ip}')" to access web application"
+	    echo "============================================================"
+            ;;
+        *)
+            echo "Wrong parameter '$1'"
+        echo "Usage: k8start 'build-type'"
+        echo "where build-type = dev or prod"
+            ;;
+    esac
+else
+        echo "Usage: k8start 'build-type'"
+        echo "where build-type = dev or prod"
+fi;
 

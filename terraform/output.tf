@@ -36,3 +36,11 @@ output "kube_config" {
 output "host" {
     value = azurerm_kubernetes_cluster.k8s.kube_config.0.host
 }
+#Azure files
+output "storage_account_name" {
+    value = azurerm_storage_account.as-cicd-files.name
+}
+output "storage_account_secret" {
+    value = azurerm_storage_account.as-cicd-files.primary_access_key
+    sensitive = true
+}

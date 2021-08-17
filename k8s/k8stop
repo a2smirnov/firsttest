@@ -1,11 +1,32 @@
 #!/bin/bash -
-#
-#Getting k8s config
-pushd ../terraform
-echo "$(terraform output -raw kube_config)" > ../k8s/azurek8s
-popd
-export KUBECONFIG=./azurek8s
-echo "Removing application"
-kubectl delete -f app.yaml
-echo "Current namespaces:"
-kubectl get all --all-namespaces
+#Removing deploys and servicies from cluster
+if [ $# -eq 1 ]
+then
+    echo "Trying to remove application for $1 environment"
+    case "$1" in
+        "dev"|"prod")
+	    #Getting k8s config
+	    pushd ../terraform
+	    echo "$(terraform output -raw kube_config)" > ../k8s/azurek8s
+	    popd
+	    export KUBECONFIG=./azurek8s
+	    if [ $1 = "dev" ]
+	    then
+		    echo "Removing k8s secret"
+		    kubectl delete secret azure-secret
+	    fi;
+	    echo "Removing application"
+	    kubectl delete -f app-$1.yaml
+	    echo "Current namespaces:"
+	    kubectl get all --all-namespaces
+            ;;
+        *)
+            echo "Wrong parameter '$1'"
+        echo "Usage: k8stop 'build-type'"
+        echo "where build-type = dev or prod"
+            ;;
+    esac
+else
+        echo "Usage: k8stop 'build-type'"
+        echo "where build-type = dev or prod"
+fi;

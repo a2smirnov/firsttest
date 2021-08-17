@@ -26,5 +26,3 @@ else
         echo "Usage: cloud-front-push 'build-type'"
         echo "where build-type = dev or prod"
 fi;
-
-

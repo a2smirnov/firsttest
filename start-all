@@ -5,7 +5,7 @@ if [ $# -eq 1 ]
 then
     echo "Trying to deploy application for $1 environment"
     case "$1" in
-        "prod")
+        "dev"|"prod")
             echo "Building infrastructure for $1"
 	    pushd terraform
 		terraform init
@@ -16,25 +16,33 @@ then
 		./build-back $1
 		echo "Pushing backend containers for $1 into ARC"
 		./cloud-back-push $1
+        	if [ $1 = "dev" ]
+        	then
+		./upload-back
+		fi;
 	    popd
 	    echo "Building frontend containers for $1"
 	    pushd frontend
 		./build-front $1
 		echo "Pushing frontend containers for $1 into ARC"
 		./cloud-front-push $1
+        	if [ $1 = "dev" ]
+        	then
+		./upload-front
+		fi;
 	    popd
 	    echo "Setting up kubernetes for $1"
 	    pushd k8s
-		./k8start
+		./k8start $1
 	    popd
 	    ;;
         *) 
 	    echo "Wrong parameter '$1'"
         echo "Usage: start-all 'build-type'"
-	echo "where build-type = prod or prod"
+	echo "where build-type = prod or dev"
 	    ;;
     esac
 else
         echo "Usage: start-all 'build-type'"
-	echo "where build-type = prod or prod"
+	echo "where build-type = prod or dev"
 fi;

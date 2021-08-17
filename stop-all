@@ -5,7 +5,7 @@ if [ $# -eq 1 ]
 then
     echo "Trying to cleanup after deployment for $1 environment"
     case "$1" in
-        "prod")
+        "dev"|"prod")
 	    echo "Removing backend containers for $1"
 	    pushd backend
 		./stop-back $1
@@ -16,7 +16,7 @@ then
 	    popd
 	    pushd k8s
 	    echo "Removing application from cluster for $1"
-		./k8stop
+		./k8stop $1
 		rm azurek8s
 	    popd
             echo "Destroying infrastructure for $1"

@@ -1,0 +1,13 @@
+#!/bin/bash -
+#Uploading frontend source to cloud volume
+pushd ../terraform
+AZURE_STORAGE_ACCOUNT=$(terraform output -raw storage_account_name)
+AZURE_STORAGE_KEY=$(terraform output -raw storage_account_secret)
+export AZURE_STORAGE_ACCOUNT
+export AZURE_STORAGE_KEY
+popd
+az storage directory create -n frontend -s k8s-files
+az storage directory create -n frontend/app_js -s k8s-files
+az storage directory create -n frontend/hosts -s k8s-files
+az storage file upload-batch -d k8s-files/frontend/hosts -s hosts
+az storage file upload-batch -d k8s-files/frontend/app_js -s app_js
