@@ -5,6 +5,6 @@ mysql-admin-password = "Gfccdjhl0"
 mysql-version        = "8.0"
 mysql-sku-name       = "B_Gen5_1"
 mysql-storage        = "5120"
-mysql-allowed-ip     = ["87.249.236.234", "92.241.229.135", "0.0.0.0"]
+mysql-allowed-ip     = ["0.0.0.0"]
 vm_size              = "standard_a2_v2"
 agent_count          = 2
