@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "ascicdk8s-3ea4"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "ascicdk8s-3ea4"
+  template:
+    metadata:
+      labels:
+        app: "ascicdk8s-3ea4"
+    spec:
+      containers:
+        - name: "ascicdk8s-3ea4"
+          image: "ascicdacr.azurecr.io/ascicdk8s"
+          ports:
+          - containerPort: 80
