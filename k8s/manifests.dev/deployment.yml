@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: fe-nginx
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: fe-nginx
@@ -20,15 +20,17 @@ spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: fe-nginx-dev
-        image: ascicdacr.azurecr.io/ascicdacr/fe-nginx-dev:latest
+      - name: fe-nginx
+        image: ascicdacr.azurecr.io/ascicdacr/fe-nginx-dev
         ports:
         - containerPort: 80
         resources:
           requests:
-            cpu: 250m
+            cpu: 50m
+            memory: 50Mi
           limits:
-            cpu: 500m
+            cpu: 50m
+            memory: 50Mi
         volumeMounts:
         - name: fe-source
           mountPath: /var/www/fe
@@ -46,23 +48,12 @@ spec:
             shareName: k8s-files/frontend/hosts
             readOnly: true
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: fe-nginx
-spec:
-  type: ClusterIP
-  ports:
-  - port: 80
-  selector:
-    app: fe-nginx
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: be-php
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: be-php
@@ -79,16 +70,18 @@ spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: be-php-dev
-        image: ascicdacr.azurecr.io/ascicdacr/be-php-dev:latest
+      - name: be-php
+        image: ascicdacr.azurecr.io/ascicdacr/be-php-dev
         ports:
         - containerPort: 9000
           name: php
         resources:
           requests:
             cpu: 250m
+            memory: 100Mi
           limits:
-            cpu: 500m
+            cpu: 250m
+            memory: 100Mi
         volumeMounts:
         - name: be-php-source
           mountPath: /var/www/api
@@ -99,24 +92,12 @@ spec:
             shareName: k8s-files/backend/api
             readOnly: true
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: php
-spec:
-  type: ClusterIP
-  ports:
-  - name: php
-    port: 9000
-  selector:
-    app: be-php
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: be-nginx
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: be-nginx
@@ -133,16 +114,18 @@ spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: be-nginx-dev
-        image: ascicdacr.azurecr.io/ascicdacr/be-nginx-dev:latest
+      - name: be-nginx
+        image: ascicdacr.azurecr.io/ascicdacr/be-nginx-dev
         ports:
         - containerPort: 80
           name: backend-nginx
         resources:
           requests:
-            cpu: 250m
+            cpu: 50m
+            memory: 50Mi
           limits:
-            cpu: 500m
+            cpu: 50m
+            memory: 50Mi
         volumeMounts:
         - name: be-source
           mountPath: /var/www/api
@@ -159,47 +142,3 @@ spec:
             secretName: azure-secret
             shareName: k8s-files/backend/hosts
             readOnly: true
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: be-nginx
-spec:
-  type: ClusterIP
-  ports:
-  - name: be-nginx
-    port: 8080
-    targetPort: 80
-  selector:
-    app: be-nginx
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: webrouter
-  annotations:
-    kubernetes.io/ingress.class: addon-http-application-routing
-    appgw.ingress.kubernetes.io/ssl-redirect: "false"
-spec:
-  defaultBackend:
-    service:
-      name: fe-nginx
-      port:
-        number: 80
-  rules:
-    - http:
-        paths:
-          - path: /trackerdata/
-            pathType: ImplementationSpecific
-            backend:
-                service:
-                  name: be-nginx
-                  port:
-                    number: 8080
-          - path: /
-            pathType: ImplementationSpecific
-            backend:
-                service:
-                  name: fe-nginx
-                  port:
-                    number: 80

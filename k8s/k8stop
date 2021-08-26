@@ -13,10 +13,12 @@ then
 	    if [ $1 = "dev" ]
 	    then
 		    echo "Removing k8s secret"
-		    kubectl delete secret azure-secret
+		    kubectl delete secret azure-secret -n $1
 	    fi;
 	    echo "Removing application"
-	    kubectl delete -f app-$1.yaml
+            kubectl delete -f manifests.$1/deployment.yml -f manifests.$1/service.yml -f manifests.$1/ingress.yml -n $1
+	    echo "Removing namespace"
+	    kubectl delete namespace $1
 	    echo "Current namespaces:"
 	    kubectl get all --all-namespaces
             ;;

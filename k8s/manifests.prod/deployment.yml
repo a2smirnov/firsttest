@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fe-nginx
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: fe-nginx
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: fe-nginx
+        image: ascicdacr.azurecr.io/ascicdacr/fe-nginx-prod
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            cpu: 500m
+            memory: 50Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: be-php
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: be-php
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: be-php
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: be-php
+        image: ascicdacr.azurecr.io/ascicdacr/be-php-prod
+        ports:
+        - containerPort: 9000
+          name: php
+        resources:
+          requests:
+            cpu: 250m
+            memory: 100Mi
+          limits:
+            cpu: 250m
+            memory: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: be-nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: be-nginx
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: be-nginx
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: be-nginx
+        image: ascicdacr.azurecr.io/ascicdacr/be-nginx-prod
+        ports:
+        - containerPort: 80
+          name: backend-nginx
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            cpu: 50m
+            memory: 50Mi
