@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: fe-nginx
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: fe-nginx
@@ -21,7 +21,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: fe-nginx
-        image: ascicdacr.azurecr.io/ascicdacr/fe-nginx-dev
+        image: ascicdacr.azurecr.io/ascicdacr/fe-nginx
         ports:
         - containerPort: 80
         resources:
@@ -31,29 +31,13 @@ spec:
           limits:
             cpu: 50m
             memory: 50Mi
-        volumeMounts:
-        - name: fe-source
-          mountPath: /var/www/fe
-        - name: fe-hosts-source
-          mountPath: /etc/nginx/conf.d
-      volumes:
-      - name: fe-source
-        azureFile:
-            secretName: azure-secret
-            shareName: k8s-files/frontend/app_js
-            readOnly: true
-      - name: fe-hosts-source
-        azureFile:
-            secretName: azure-secret
-            shareName: k8s-files/frontend/hosts
-            readOnly: true
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: be-php
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: be-php
@@ -71,7 +55,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: be-php
-        image: ascicdacr.azurecr.io/ascicdacr/be-php-dev
+        image: ascicdacr.azurecr.io/ascicdacr/be-php
         ports:
         - containerPort: 9000
           name: php
@@ -82,22 +66,13 @@ spec:
           limits:
             cpu: 250m
             memory: 100Mi
-        volumeMounts:
-        - name: be-php-source
-          mountPath: /var/www/api
-      volumes:
-      - name: be-php-source
-        azureFile:
-            secretName: azure-secret
-            shareName: k8s-files/backend/api
-            readOnly: true
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: be-nginx
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: be-nginx
@@ -115,7 +90,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: be-nginx
-        image: ascicdacr.azurecr.io/ascicdacr/be-nginx-dev
+        image: ascicdacr.azurecr.io/ascicdacr/be-nginx
         ports:
         - containerPort: 80
           name: backend-nginx
@@ -126,19 +101,3 @@ spec:
           limits:
             cpu: 50m
             memory: 50Mi
-        volumeMounts:
-        - name: be-source
-          mountPath: /var/www/api
-        - name: be-hosts-source
-          mountPath: /etc/nginx/conf.d
-      volumes:
-      - name: be-source
-        azureFile:
-            secretName: azure-secret
-            shareName: k8s-files/backend/api
-            readOnly: true
-      - name: be-hosts-source
-        azureFile:
-            secretName: azure-secret
-            shareName: k8s-files/backend/hosts
-            readOnly: true

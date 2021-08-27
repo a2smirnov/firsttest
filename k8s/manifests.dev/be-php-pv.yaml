@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: be-php
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: be-php
+        volumeMounts:
+        - name: be-php-source
+          mountPath: /var/www/api
+      volumes:
+      - name: be-php-source
+        azureFile:
+            secretName: azure-secret
+            shareName: k8s-files/backend/api
+            readOnly: true

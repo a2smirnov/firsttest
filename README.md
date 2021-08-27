@@ -45,7 +45,9 @@ to setup frontend parameters edit:
 ## Azure k8s setup - 
 ./k8s/k8env to get environment for kubectl from Terraform
 ./k8s/k8secret to create k8s secret to mount Azure file share as volumes for dev environment
-./k8start dev|prod to deploy dev|prod application into dev|prod namespace (mainfests.dev/ and manifests.prod/)
+./k8start dev|prod to deploy dev|prod application into dev|prod namespace 
+
+Kustomization from ./k8s/mainfests.dev/ and ./k8s/mainfests.prod/
 
 # Templates used when creating application:
 ## backend: https://only-to-top.ru/blog/programming/2019-11-06-rest-api-php.html

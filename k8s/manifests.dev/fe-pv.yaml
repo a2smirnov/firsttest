@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-nginx
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: fe-nginx
+        volumeMounts:
+        - name: fe-source
+          mountPath: /var/www/fe
+        - name: fe-hosts-source
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: fe-source
+        azureFile:
+            secretName: azure-secret
+            shareName: k8s-files/frontend/app_js
+            readOnly: true
+      - name: fe-hosts-source
+        azureFile:
+            secretName: azure-secret
+            shareName: k8s-files/frontend/hosts
+            readOnly: true

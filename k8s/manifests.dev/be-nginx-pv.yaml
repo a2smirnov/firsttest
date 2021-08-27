@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: be-nginx
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: be-nginx
+        volumeMounts:
+        - name: be-source
+          mountPath: /var/www/api
+        - name: be-hosts-source
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: be-source
+        azureFile:
+            secretName: azure-secret
+            shareName: k8s-files/backend/api
+            readOnly: true
+      - name: be-hosts-source
+        azureFile:
+            secretName: azure-secret
+            shareName: k8s-files/backend/hosts
+            readOnly: true

@@ -1,0 +1,14 @@
+bases:
+- ../manifests
+namespace: dev
+images:
+- name: ascicdacr.azurecr.io/ascicdacr/fe-nginx
+  newName: ascicdacr.azurecr.io/ascicdacr/fe-nginx-dev
+- name: ascicdacr.azurecr.io/ascicdacr/be-nginx
+  newName: ascicdacr.azurecr.io/ascicdacr/be-nginx-dev
+- name: ascicdacr.azurecr.io/ascicdacr/be-php
+  newName: ascicdacr.azurecr.io/ascicdacr/be-php-dev
+patchesStrategicMerge:
+- fe-pv.yaml
+- be-php-pv.yaml
+- be-nginx-pv.yaml

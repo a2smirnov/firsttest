@@ -16,7 +16,7 @@ then
 		    kubectl delete secret azure-secret -n $1
 	    fi;
 	    echo "Removing application"
-            kubectl delete -f manifests.$1/deployment.yml -f manifests.$1/service.yml -f manifests.$1/ingress.yml -n $1
+            kubectl delete -k manifests.$1/
 	    echo "Removing namespace"
 	    kubectl delete namespace $1
 	    echo "Current namespaces:"

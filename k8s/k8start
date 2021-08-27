@@ -27,7 +27,7 @@ then
 	    AZF_SECRET=""
 	    AZF_ACCOUNT=""
 	    echo "Setting up application"
-	    kubectl apply -f manifests.$1/deployment.yml -f manifests.$1/service.yml -f manifests.$1/ingress.yml -n $1
+	    kubectl apply -k manifests.$1/
 	    echo "Current namespaces:"
 	    kubectl get all -n $1
 	    echo "============================================================"
