@@ -36,6 +36,9 @@ output "kube_config" {
 output "host" {
     value = azurerm_kubernetes_cluster.k8s.kube_config.0.host
 }
+output "http_router_url" {
+    value = azurerm_kubernetes_cluster.k8s.addon_profile.0.http_application_routing.0.http_application_routing_zone_name
+}
 #Azure files
 output "storage_account_name" {
     value = azurerm_storage_account.as-cicd-files.name

@@ -13,7 +13,7 @@ then
 	    popd
 	    echo "Building backend containers for $1"
 	    pushd backend
-		./build-back $1
+		./build-back-k8s $1
 		echo "Pushing backend containers for $1 into ARC"
 		./cloud-back-push $1
         	if [ $1 = "dev" ]
@@ -23,7 +23,7 @@ then
 	    popd
 	    echo "Building frontend containers for $1"
 	    pushd frontend
-		./build-front $1
+		./build-front-k8s $1
 		echo "Pushing frontend containers for $1 into ARC"
 		./cloud-front-push $1
         	if [ $1 = "dev" ]

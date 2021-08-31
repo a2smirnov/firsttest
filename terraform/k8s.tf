@@ -36,9 +36,9 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         network_plugin = "kubenet"
     }
 
-    tags = {
-        Environment = "dev"
-    }
+#    tags = {
+#        Environment = "dev"
+#    }
 }
 
 #add the role to the identity to which kubernetes cluster was assigned

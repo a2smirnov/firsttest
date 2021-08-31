@@ -17,10 +17,6 @@ then
 	    fi;
 	    echo "Removing application"
             kubectl delete -k manifests.$1/
-	    echo "Removing secrets"
-            kubectl delete secret app-secret -n $1
-	    echo "Removing configMap"
-            kubectl delete configmap app-public -n $1
 	    echo "Removing namespace"
 	    kubectl delete namespace $1
 	    echo "Current namespaces:"

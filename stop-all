@@ -6,15 +6,16 @@ then
     echo "Trying to cleanup after deployment for $1 environment"
     case "$1" in
         "dev"|"prod")
-	    echo "Removing backend containers for $1"
-	    pushd backend
-		./stop-back $1
-	    popd
-	    echo "Removing frontend containers for $1"
-	    pushd frontend
-		./stop-front $1
-	    popd
-	    pushd k8s
+#	    Application deployment moved to k8s, so docker stop on local machine doesn't needed anymore
+#	    echo "Removing backend containers for $1"
+#	    pushd backend
+#		./stop-back $1
+#	    popd
+#	    echo "Removing frontend containers for $1"
+#	    pushd frontend
+#		./stop-front $1
+#	    popd
+#	    pushd k8s
 	    echo "Removing application from cluster for $1"
 		./k8stop $1
 		rm azurek8s

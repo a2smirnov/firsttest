@@ -1,0 +1,21 @@
+#!/bin/bash -
+#Building project for k8s cluster (configMap and secrets env variables setup)
+
+if [ $# -eq 1 ]
+then
+    echo "Trying to build frontend for $1 environment"
+    case "$1" in
+        "dev"|"prod")
+            echo "Building $1"
+	    docker build --build-arg ENV_TYPE=$1 -t fe-nginx-$1:latest -f ./Dockerfile . 
+	    ;;
+        *) 
+	    echo "Wrong parameter '$1'"
+        echo "Usage: build-front 'build-type'"
+	echo "where build-type = dev or prod"
+	    ;;
+    esac
+else
+        echo "Usage: build-front 'build-type'"
+	echo "where build-type = dev or prod"
+fi;

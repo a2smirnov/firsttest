@@ -10,8 +10,6 @@ then
     	    echo "$(terraform output -raw kube_config)" > ../k8s/azurek8s
 	    AZF_SECRET=$(terraform output -raw storage_account_secret)
 	    AZF_ACCOUNT=$(terraform output -raw storage_account_name)
-	    #Getting DB credentials
-	    export $(terraform output -raw credentials | xargs)
 	    popd
 	    export KUBECONFIG=./azurek8s
 	    echo "Creating $1 namespace"
@@ -24,18 +22,10 @@ then
             then
 		    echo "Using cloud volumes in $1 environment"
 		    echo "Creating k8s secret"
-		    kubectl create secret generic azure-secret --from-literal=azurestorageaccountname=$AZF_ACCOUNT --from-literal=azurestorageaccountkey=$AZF_SECRET -n $1 --dry-run=client -o yaml | kubectl apply -f -
+		    kubectl create secret generic azure-secret --from-literal=azurestorageaccountname=$AZF_ACCOUNT --from-literal=azurestorageaccountkey=$AZF_SECRET -n $1
 	    fi;
-	    echo "Creating public configMap"
-	    kubectl create configmap app-public --from-literal=ENV_TYPE=$1 --from-literal=DB_HOST=$DB_HOST --from-literal=DB_NAME=$DB_NAME -n $1 --dry-run=client -o yaml | kubectl apply -f -
-	    echo "Creating application secret"
-	    kubectl create secret generic app-secret --from-literal=DB_USERNAME=$DB_USERNAME --from-literal=DB_PASSWORD=$DB_PASSWORD -n $1 --dry-run=client -o yaml | kubectl apply -f -
 	    AZF_SECRET=""
 	    AZF_ACCOUNT=""
-	    DB_HOST=""
-	    DB_NAME=""
-	    DB_USERNAME=""
-	    DB_PASSWORD=""
 	    echo "Setting up application"
 	    kubectl apply -k manifests.$1/
 	    echo "Current namespaces:"

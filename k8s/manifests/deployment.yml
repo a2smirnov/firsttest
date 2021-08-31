@@ -22,6 +22,12 @@ spec:
       containers:
       - name: fe-nginx
         image: ascicdacr.azurecr.io/ascicdacr/fe-nginx
+        env: 
+          - name: ENV_TYPE
+            valueFrom:
+              configMapKeyRef:
+                name: app-public
+                key: ENV_TYPE
         ports:
         - containerPort: 80
         resources:
@@ -29,7 +35,7 @@ spec:
             cpu: 50m
             memory: 50Mi
           limits:
-            cpu: 50m
+            cpu: 500m
             memory: 50Mi
 ---
 apiVersion: apps/v1
@@ -56,6 +62,11 @@ spec:
       containers:
       - name: be-php
         image: ascicdacr.azurecr.io/ascicdacr/be-php
+        envFrom:
+        - configMapRef:
+            name: app-public
+        - secretRef:
+            name: app-secret
         ports:
         - containerPort: 9000
           name: php
@@ -91,6 +102,12 @@ spec:
       containers:
       - name: be-nginx
         image: ascicdacr.azurecr.io/ascicdacr/be-nginx
+        env: 
+          - name: ENV_TYPE
+            valueFrom:
+              configMapKeyRef:
+                name: app-public
+                key: ENV_TYPE
         ports:
         - containerPort: 80
           name: backend-nginx
