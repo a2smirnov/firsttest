@@ -25,6 +25,10 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 	http_application_routing {
 	    enabled = true
 	}
+	oms_agent {
+	    enabled = true
+	    log_analytics_workspace_id = azurerm_log_analytics_workspace.ascicdlogs.id
+	}
     }
 
     role_based_access_control {

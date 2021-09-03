@@ -1,0 +1,464 @@
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 5,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "options",
+                  "isOptional": true
+                },
+                {
+                  "name": "sharedTimeRange",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+              "settings": {
+                "content": {
+                  "options": {
+                    "chart": {
+                      "metrics": [
+                        {
+                          "resourceMetadata": {
+                            "id": "/subscriptions/f8b8aeef-be02-4eb0-9430-b53bccb55fb7/resourceGroups/as-cicd-task/providers/Microsoft.ContainerService/managedClusters/as-cicd-k8s"
+                          },
+                          "name": "node_cpu_usage_percentage",
+                          "aggregationType": 4,
+                          "namespace": "microsoft.containerservice/managedclusters",
+                          "metricVisualization": {
+                            "displayName": "CPU Usage Percentage",
+                            "resourceDisplayName": "as-cicd-k8s"
+                          }
+                        }
+                      ],
+                      "title": "Среднее CPU Usage Percentage для as-cicd-k8s",
+                      "titleKind": 1,
+                      "visualization": {
+                        "chartType": 2,
+                        "legendVisualization": {
+                          "isVisible": true,
+                          "position": 2,
+                          "hideSubtitle": false
+                        },
+                        "axisVisualization": {
+                          "x": {
+                            "isVisible": true,
+                            "axisType": 2
+                          },
+                          "y": {
+                            "isVisible": true,
+                            "axisType": 1
+                          }
+                        },
+                        "disablePinning": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "1": {
+            "position": {
+              "x": 5,
+              "y": 0,
+              "colSpan": 5,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "options",
+                  "isOptional": true
+                },
+                {
+                  "name": "sharedTimeRange",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+              "settings": {
+                "content": {
+                  "options": {
+                    "chart": {
+                      "metrics": [
+                        {
+                          "resourceMetadata": {
+                            "id": "/subscriptions/f8b8aeef-be02-4eb0-9430-b53bccb55fb7/resourceGroups/as-cicd-task/providers/Microsoft.ContainerService/managedClusters/as-cicd-k8s"
+                          },
+                          "name": "node_memory_working_set_percentage",
+                          "aggregationType": 4,
+                          "namespace": "microsoft.containerservice/managedclusters",
+                          "metricVisualization": {
+                            "displayName": "Memory Working Set Percentage",
+                            "resourceDisplayName": "as-cicd-k8s"
+                          }
+                        },
+                        {
+                          "resourceMetadata": {
+                            "id": "/subscriptions/f8b8aeef-be02-4eb0-9430-b53bccb55fb7/resourceGroups/as-cicd-task/providers/Microsoft.ContainerService/managedClusters/as-cicd-k8s"
+                          },
+                          "name": "Microsoft.Used Disk Percentage",
+                          "aggregationType": 4,
+                          "namespace": "Container Insights",
+                          "metricVisualization": {
+                            "displayName": "Used Disk Percentage",
+                            "resourceDisplayName": "as-cicd-k8s"
+                          }
+                        }
+                      ],
+                      "title": "Среднее Memory Working Set Percentage и Среднее Used Disk Percentage для as-cicd-k8s",
+                      "titleKind": 1,
+                      "visualization": {
+                        "chartType": 2,
+                        "legendVisualization": {
+                          "isVisible": true,
+                          "position": 2,
+                          "hideSubtitle": false
+                        },
+                        "axisVisualization": {
+                          "x": {
+                            "isVisible": true,
+                            "axisType": 2
+                          },
+                          "y": {
+                            "isVisible": true,
+                            "axisType": 1
+                          }
+                        },
+                        "disablePinning": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "2": {
+            "position": {
+              "x": 10,
+              "y": 0,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "options",
+                  "isOptional": true
+                },
+                {
+                  "name": "sharedTimeRange",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+              "settings": {
+                "content": {
+                  "options": {
+                    "chart": {
+                      "metrics": [
+                        {
+                          "resourceMetadata": {
+                            "id": "/subscriptions/f8b8aeef-be02-4eb0-9430-b53bccb55fb7/resourceGroups/as-cicd-task/providers/Microsoft.ContainerService/managedClusters/as-cicd-k8s"
+                          },
+                          "name": "kube_pod_status_ready",
+                          "aggregationType": 4,
+                          "namespace": "microsoft.containerservice/managedclusters",
+                          "metricVisualization": {
+                            "displayName": "Number of pods in Ready state",
+                            "resourceDisplayName": "as-cicd-k8s"
+                          }
+                        }
+                      ],
+                      "title": "Среднее Number of pods in Ready state для as-cicd-k8s",
+                      "titleKind": 1,
+                      "visualization": {
+                        "chartType": 2,
+                        "legendVisualization": {
+                          "isVisible": true,
+                          "position": 2,
+                          "hideSubtitle": false
+                        },
+                        "axisVisualization": {
+                          "x": {
+                            "isVisible": true,
+                            "axisType": 2
+                          },
+                          "y": {
+                            "isVisible": true,
+                            "axisType": 1
+                          }
+                        },
+                        "disablePinning": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "3": {
+            "position": {
+              "x": 0,
+              "y": 4,
+              "colSpan": 8,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/f8b8aeef-be02-4eb0-9430-b53bccb55fb7/resourceGroups/as-cicd-task/providers/Microsoft.ContainerService/managedClusters/as-cicd-k8s"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "5bee078d-4aae-417b-bd55-f80b9a7d6904",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P1D",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "value": {
+                    "scope": "hierarchy"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": "// Find a value in Container Logs Table \n// ** This query requires a parameter to run. Container Logs table is used Log lines collected from stdout and stderr streams for containers. This query will find rows in the ContainerLogs table where LogEntry has specified String. \n//This qeury requires a parameter to work.\n//The ContainerLog table holds Log lines collected from stdout and stderr streams for containers.\n//Note: the query runs by default for the last 24 hours. Use the time pikcer to adjust time span for query\nlet FindString = \"POST\";//Please update term  you would like to find in LogEntry here\nContainerLog \n| where LogEntry has FindString \n|take 100\n",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "as-cicd-k8s",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": false,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {
+                "content": {
+                  "GridColumnsWidth": {
+                    "LogEntry": "547px"
+                  },
+                  "Query": "// Find a value in Container Logs Table \n// ** This query requires a parameter to run. Container Logs table is used Log lines collected from stdout and stderr streams for containers. This query will find rows in the ContainerLogs table where LogEntry has specified String. \n//This qeury requires a parameter to work.\n//The ContainerLog table holds Log lines collected from stdout and stderr streams for containers.\n//Note: the query runs by default for the last 24 hours. Use the time pikcer to adjust time span for query\nlet FindString = \"POST /trackerdata\";//Please update term  you would like to find in LogEntry here\nContainerLog \n| where LogEntry has FindString \n|take 100\n|project TimeGenerated, LogEntry\n| order by TimeGenerated desc \n\n",
+                  "PartTitle": "Backend requests"
+                }
+              }
+            }
+          },
+          "4": {
+            "position": {
+              "x": 8,
+              "y": 4,
+              "colSpan": 8,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/f8b8aeef-be02-4eb0-9430-b53bccb55fb7/resourceGroups/as-cicd-task/providers/Microsoft.ContainerService/managedClusters/as-cicd-k8s"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "135180f6-3a43-45ff-9901-0ca01353de36",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P1D",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "value": {
+                    "scope": "hierarchy"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": "// Find a value in Container Logs Table \n// ** This query requires a parameter to run. Container Logs table is used Log lines collected from stdout and stderr streams for containers. This query will find rows in the ContainerLogs table where LogEntry has specified String. \n//This qeury requires a parameter to work.\n//The ContainerLog table holds Log lines collected from stdout and stderr streams for containers.\n//Note: the query runs by default for the last 24 hours. Use the time pikcer to adjust time span for query\nlet FindString = \"GET /app\";//Please update term  you would like to find in LogEntry here\nContainerLog \n| where LogEntry has FindString \n| take 100\n| project LogEntry\n",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "as-cicd-k8s",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": false,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {
+                "content": {
+                  "GridColumnsWidth": {
+                    "LogEntry": "649px"
+                  },
+                  "Query": "// Find a value in Container Logs Table \n// ** This query requires a parameter to run. Container Logs table is used Log lines collected from stdout and stderr streams for containers. This query will find rows in the ContainerLogs table where LogEntry has specified String. \n//This qeury requires a parameter to work.\n//The ContainerLog table holds Log lines collected from stdout and stderr streams for containers.\n//Note: the query runs by default for the last 24 hours. Use the time pikcer to adjust time span for query\nlet FindString = \"GET /app\";//Please update term  you would like to find in LogEntry here\nContainerLog \n| where LogEntry has FindString \n| take 100\n| project TimeGenerated, LogEntry\n| order by TimeGenerated desc \n\n",
+                  "PartTitle": "Frontend requests"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+        },
+        "filterLocale": {
+          "value": "ru-ru"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_TimeRange": {
+              "model": {
+                "format": "local",
+                "granularity": "auto",
+                "relative": "1h"
+              },
+              "displayCache": {
+                "name": "Местное время",
+                "value": "За последний час"
+              },
+              "filteredPartIds": [
+                "StartboardPart-MonitorChartPart-b53074f9-5bd8-4d10-bdb2-63aea9787263",
+                "StartboardPart-MonitorChartPart-b53074f9-5bd8-4d10-bdb2-63aea9787363",
+                "StartboardPart-MonitorChartPart-b53074f9-5bd8-4d10-bdb2-63aea978736f",
+                "StartboardPart-LogsDashboardPart-c5fc32ce-7994-49f0-83df-3be9d29ec17d",
+                "StartboardPart-LogsDashboardPart-c5fc32ce-7994-49f0-83df-3be9d29ec212"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "Пробная панель",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "INSERT LOCATION",
+  "tags": {
+    "hidden-title": "Пробная панель"
+  },
+  "apiVersion": "2015-08-01-preview"
+}

@@ -2,7 +2,8 @@
 AZURE MySQL server and database 
 Azure container repository
 Azure k8s cluster with ACR pull access
+Oms_agent and Log Analitics Workspace for cluster monitoring
 
-## Server have public access limited to two specific external address for debug purposes and unrestricted access from Azure
-## DB credentials from terraform used by docker to build backend
+## DB credentials from terraform used by docker or kustomize to build backend
 
+## azure_dashboard.json - Azure monitoring dashboard sample
