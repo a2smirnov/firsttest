@@ -9,31 +9,31 @@ then
             echo "Building infrastructure for $1"
 	    pushd terraform
 		terraform init
-		terraform apply -auto-approve
+		terraform apply -auto-approve || { echo "Error creating infrastructure!"; exit 1; }
 	    popd
 	    echo "Building backend containers for $1"
 	    pushd backend
-		./build-back-k8s $1
+		./build-back-k8s $1 || { echo "Error building backend!"; exit 1; }
 		echo "Pushing backend containers for $1 into ARC"
-		./cloud-back-push $1
+		./cloud-back-push $1 || { echo "Error uploading backend!"; exit 1; }
         	if [ $1 = "dev" ]
         	then
-		./upload-back
+		./upload-back || { echo "Error uploading backend sources for $1!"; exit 1; }
 		fi;
 	    popd
 	    echo "Building frontend containers for $1"
 	    pushd frontend
-		./build-front-k8s $1
+		./build-front-k8s $1 || { echo "Error building frontend!"; exit 1; }
 		echo "Pushing frontend containers for $1 into ARC"
-		./cloud-front-push $1
+		./cloud-front-push $1 || { echo "Error uploading frontend!"; exit 1; }
         	if [ $1 = "dev" ]
         	then
-		./upload-front
+		./upload-front || { echo "Error uploading frontend sources for $1!"; exit 1; }
 		fi;
 	    popd
 	    echo "Setting up kubernetes for $1"
 	    pushd k8s
-		./k8start $1
+		./k8start $1 || { echo "Error setting up k8s!"; exit 1; }
 	    popd
 	    ;;
         *) 
