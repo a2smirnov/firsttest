@@ -10,4 +10,6 @@ az storage directory create -n frontend -s k8s-files
 az storage directory create -n frontend/app_js -s k8s-files
 az storage directory create -n frontend/hosts -s k8s-files
 az storage file upload-batch -d k8s-files/frontend/hosts -s hosts
+cp app_js/app/config/settings.js-dev app_js/app/config/settings.js
 az storage file upload-batch -d k8s-files/frontend/app_js -s app_js
+rm app_js/app/config/settings.js

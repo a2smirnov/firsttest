@@ -1,3 +1,4 @@
+#K8s cluster configuration
 resource "azurerm_kubernetes_cluster" "k8s" {
     name                = var.cluster_name
     location            = azurerm_resource_group.cicd-task.location
@@ -39,20 +40,17 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         load_balancer_sku = "Standard"
         network_plugin = "kubenet"
     }
-
-#    tags = {
-#        Environment = "dev"
-#    }
+  tags = var.tags
 }
 
-#add the role to the identity to which kubernetes cluster was assigned
+#Pull access to ACR for k8s cluster
 resource "azurerm_role_assignment" "k8s_to_acr" {
   scope                = azurerm_container_registry.ascicdacr.id
   role_definition_name = "AcrPull"
   principal_id         = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
 }
 
-#setting up kubernetes provider to support volume creation
+#Setting up kubernetes provider to support volume creation
 provider "kubernetes" {
   host                   = "${azurerm_kubernetes_cluster.k8s.kube_config.0.host}"
   client_certificate     = "${base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)}"
@@ -60,7 +58,7 @@ provider "kubernetes" {
   cluster_ca_certificate = "${base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)}"
 }
 
-#add volume from Azure files 
+#Add volume from Azure files for "ultra-dev" environment
 resource "kubernetes_persistent_volume" "k8sfiles" {
   metadata {
     name = "k8sfiles"

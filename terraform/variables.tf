@@ -1,11 +1,18 @@
-#general vars
+#Variables definition and default values
+#General vars
 variable resource_group_name {
+    type = string
     default = "as-cicd-task"
 }
 variable location {
+    type = string
     default = "West Europe"
 }
-
+variable tags {
+    type = map
+    default = {"owner" = "Aleksei_Smirnov1"}
+    description = "Resources labels"
+}
 #MySQL vars
 variable "mysql-admin-login" {
   type = string
