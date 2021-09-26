@@ -14,7 +14,7 @@ then
 	    echo "Building backend containers for $1"
 	    pushd backend
 		./build-back-k8s $1 || { echo "Error building backend!"; exit 1; }
-		echo "Pushing backend containers for $1 into ARC"
+		echo "Pushing backend containers for $1 into ACR"
 		./cloud-back-push $1 || { echo "Error uploading backend!"; exit 1; }
         	if [ $1 = "dev" ]
         	then
@@ -24,7 +24,7 @@ then
 	    echo "Building frontend containers for $1"
 	    pushd frontend
 		./build-front-k8s $1 || { echo "Error building frontend!"; exit 1; }
-		echo "Pushing frontend containers for $1 into ARC"
+		echo "Pushing frontend containers for $1 into ACR"
 		./cloud-front-push $1 || { echo "Error uploading frontend!"; exit 1; }
         	if [ $1 = "dev" ]
         	then
