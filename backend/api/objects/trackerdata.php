@@ -114,7 +114,7 @@ function update(){
 //                    } else {
 //                        $stringency=$country_data->stringency;
 //                    }
-//                    $stringency=is_null($country_data->stringency) ? "0" : $country_data->stringency;
+                    $stringency=is_null($country_data->stringency) ? "0" : $country_data->stringency;
 //                    if (is_null($country_data->stringency_actual)) {
 //                        $stringency_actual="NULL";
 //                    } else {
