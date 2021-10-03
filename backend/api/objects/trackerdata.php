@@ -5,7 +5,6 @@ class TrackerData {
     private $conn;
     private $table_name;
     private $db_engine;
-    private $db_encoding;
     private $data_source;
     private $countries;
 
@@ -76,7 +75,6 @@ function update(){
         if ($num>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $start_date = $row["date_value"];
-//            echo("Update: last day data found! ".$start_date);
         }
     }
     //удаляем данные последнего дня (возможно они были изменены после последнего забора)
@@ -86,13 +84,8 @@ function update(){
     // привязываем дату
     $stmt->bindParam(1, $start_date);
     // выполняем запрос 
-    if ($stmt->execute()) {
-//        echo("Update: last day data deleted!");
-    } else {
-//        echo("Last day deletion failed ".$query);
-    }
 
-//  удаляем все существующие данные перед обновлением
+    //  удаляем все существующие данные перед обновлением
 //    $this->delete();
     //читаем ранее не считанные данные из api
     $data_source_full = $this->data_source."/".$start_date."/".$end_date;

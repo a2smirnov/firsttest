@@ -2,3 +2,6 @@
 #run at cloud shell
 az aks start --name as-cicd-k8s --resource-group as-cicd-task
 az aks stop --name as-cicd-k8s --resource-group as-cicd-task
+#PowerShell version
+Stop-AzAksCluster -Name as-cicd-k8s -ResourceGroupName as-cicd-task
+Start-AzAksCluster -Name as-cicd-k8s -ResourceGroupName as-cicd-task
