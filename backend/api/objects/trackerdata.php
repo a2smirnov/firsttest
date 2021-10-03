@@ -97,26 +97,30 @@ function update(){
         foreach ($obj->data as $data => $values) {
             foreach ($values as $country => $country_data) {
                 if (in_array($country, $this->countries)) {
-                    if (is_null($country_data->confirmed)) {
-                        $confirmed="0";
-                    } else {
-                        $confirmed=$country_data->confirmed;
-                    }
-                    if (is_null($country_data->deaths)) {
-                        $deaths="0";
-                    } else {
-                        $deaths=$country_data->deaths;
-                    }
-                    if (is_null($country_data->stringency)) {
-                        $stringency="NULL";
-                    } else {
-                        $stringency=$country_data->stringency;
-                    }
-                    if (is_null($country_data->stringency_actual)) {
-                        $stringency_actual="NULL";
-                    } else {
-                        $stringency_actual=$country_data->stringency_actual;
-                    }                    
+//                    if (is_null($country_data->confirmed)) {
+//                        $confirmed="0";
+//                    } else {
+//                       $confirmed=$country_data->confirmed;
+//                    }
+                    $confirmed=is_null($country_data->confirmed) ? "0" : $country_data->confirmed;
+//                    if (is_null($country_data->deaths)) {
+//                        $deaths="0";
+//                    } else {
+//                        $deaths=$country_data->deaths;
+//                    }
+                    $deaths=is_null($country_data->deaths) ? "0" : $country_data->deaths;
+//                    if (is_null($country_data->stringency)) {
+//                        $stringency="NULL";
+//                    } else {
+//                        $stringency=$country_data->stringency;
+//                    }
+//                    $stringency=is_null($country_data->stringency) ? "0" : $country_data->stringency;
+//                    if (is_null($country_data->stringency_actual)) {
+//                        $stringency_actual="NULL";
+//                    } else {
+//                        $stringency_actual=$country_data->stringency_actual;
+//                    }                    
+                    $stringency_actual=is_null($country_data->stringency_actual) ? "0" : $country_data->stringency_actual;
                 $query .= "('".$data."', '".$country."', ".$confirmed.", ".$deaths.", ".$stringency_actual.", ".$stringency."),";
                 }
             }
