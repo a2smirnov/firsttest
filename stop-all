@@ -15,7 +15,7 @@ then
 #	    pushd frontend
 #		./stop-front $1
 #	    popd
-#	    pushd k8s
+	    pushd k8s
 	    echo "Removing application from cluster for $1"
 		./k8stop $1
 		rm azurek8s
