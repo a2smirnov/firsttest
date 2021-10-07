@@ -12,17 +12,18 @@ spec:
       port:
         number: 80
   rules:
-    - http:
+    - host: "${EXT_NAME}"
+      http:
         paths:
           - path: /trackerdata/
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
                 service:
                   name: be-nginx
                   port:
                     number: 8080
           - path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
                 service:
                   name: fe-nginx

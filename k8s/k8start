@@ -36,12 +36,17 @@ then
 	    DB_NAME=""
 	    DB_USERNAME=""
 	    DB_PASSWORD=""
+	    #Getting ingress external IP and converting it to hostname for current stage
+	    export EXT_NAME="$1.$(kubectl -n kube-system get svc addon-http-application-routing-nginx-ingress --output jsonpath='{.status.loadBalancer.ingress[0].ip}').nip.io"
+	    #Setting ingress hostname
+	    envsubst < manifests/ingress-tmp.yaml > manifests/ingress.yaml
 	    echo "Setting up application"
 	    kubectl apply -k manifests.$1/
+	    rm manifests/ingress.yaml
 	    echo "Current namespaces:"
 	    kubectl get all -n $1
 	    echo "============================================================"
-	    echo "Use link http://"$(kubectl -n kube-system get svc addon-http-application-routing-nginx-ingress --output jsonpath='{.status.loadBalancer.ingress[0].ip}')" to access web application"
+	    echo "Use link http://$EXT_NAME to access web application"
 	    echo "============================================================"
             ;;
         *)
