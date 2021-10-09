@@ -13,6 +13,9 @@ To start project you should login to Azure first (with 'az login --use-device-co
 ./stop-all prod
 
 # Some details
+## SonarCloud check integrated (token should be set via env variable)
+https://sonarcloud.io/dashboard?id=cicd-task
+
 ## Infrastructure (created by Terraform):
 DB - Azure MySQL
 Registry - ACR

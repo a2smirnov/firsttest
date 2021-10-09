@@ -6,6 +6,12 @@ then
     echo "Trying to deploy application for $1 environment"
     case "$1" in
         "dev"|"prod")
+	    echo "Checking code with SonarCloud"
+	    sonar-scanner \
+	      -Dsonar.organization=as-cicd-task \
+	      -Dsonar.projectKey=cicd-task \
+	      -Dsonar.sources=. \
+	      -Dsonar.host.url=https://sonarcloud.io -Dsonar.exclusions=**/jquery.js
             echo "Building infrastructure for $1"
 	    pushd terraform
 		terraform init
