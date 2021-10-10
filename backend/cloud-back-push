@@ -1,7 +1,8 @@
 #!/bin/bash -
+#Pushing containers to ACR
 if [ $# -eq 1 ]
 then
-    echo "Trying to build application for $1 environment"
+    echo "Pushing containers for $1 environment to ACR"
     case "$1" in
         "dev"|"prod")
 	    BUILDNUMBER=$(cat ../.buildnumber)

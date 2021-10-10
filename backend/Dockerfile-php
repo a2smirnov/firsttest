@@ -6,6 +6,7 @@ FROM php:7.4-fpm-alpine
 # Для установки модулей используем команду docker-php-ext-install.
 RUN apk add \
         curl \
+	stress-ng \
 	libzip-dev \
 	libmcrypt-dev \
         && docker-php-ext-install -j$(nproc) iconv mysqli pdo_mysql zip

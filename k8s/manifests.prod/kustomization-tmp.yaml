@@ -8,3 +8,5 @@ images:
   newName: ascicdacr.azurecr.io/ascicdacr/be-nginx-prod:${BUILDNUMBER}
 - name: ascicdacr.azurecr.io/ascicdacr/be-php
   newName: ascicdacr.azurecr.io/ascicdacr/be-php-prod:${BUILDNUMBER}
+resources:
+- hpa.yaml

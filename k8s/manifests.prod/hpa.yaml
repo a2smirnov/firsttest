@@ -1,0 +1,68 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+    name: be-nginx
+    namespace: prod
+spec:
+    maxReplicas: 5
+    minReplicas: 1
+    scaleTargetRef:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: be-nginx
+    metrics:
+     - type: Resource
+       resource:
+         name: cpu
+         target:
+           type: Utilization
+           averageUtilization: 75
+    behavior:
+      scaleDown:
+        stabilizationWindowSeconds: 60
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+    name: be-php
+    namespace: prod
+spec:
+    maxReplicas: 5
+    minReplicas: 1
+    scaleTargetRef:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: be-php
+    metrics:
+     - type: Resource
+       resource:
+         name: cpu
+         target:
+           type: Utilization
+           averageUtilization: 75
+    behavior:
+      scaleDown:
+        stabilizationWindowSeconds: 60
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+    name: fe-nginx
+    namespace: prod
+spec:
+    maxReplicas: 5
+    minReplicas: 1
+    scaleTargetRef:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: fe-nginx
+    metrics:
+     - type: Resource
+       resource:
+         name: cpu
+         target:
+           type: Utilization
+           averageUtilization: 75
+    behavior:
+      scaleDown:
+        stabilizationWindowSeconds: 60

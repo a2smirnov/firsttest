@@ -1,0 +1,15 @@
+HPA demo tips:
+stress-ng integrated into be-php containers
+
+Witching current CPU load:
+watch kubectl top pod -n prod
+
+HPA downscale timer set to 60 sec
+
+To watch current state:
+kubectl describe hpa be-php -n prod
+
+To stress test:
+kubectl exec -it be-php-577cbb8976-b89rz -n prod -- sh
+then
+stress-ng --cpu 2

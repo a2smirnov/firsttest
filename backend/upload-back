@@ -1,5 +1,5 @@
 #!/bin/bash -
-#Uploading frontend source to cloud volume
+#Uploading frontend source to cloud volume (for ultra-dev env)
 pushd ../terraform
 AZURE_STORAGE_ACCOUNT=$(terraform output -raw storage_account_name)
 AZURE_STORAGE_KEY=$(terraform output -raw storage_account_secret)
