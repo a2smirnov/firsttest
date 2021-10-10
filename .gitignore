@@ -1,2 +1,4 @@
 # Local sonarcloud scanner directories
 **/.scannerwork/*
+#Current build number
+.buildnumber

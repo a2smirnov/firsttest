@@ -36,13 +36,20 @@ then
 	    DB_NAME=""
 	    DB_USERNAME=""
 	    DB_PASSWORD=""
+	    #Getting build number
+	    export BUILDNUMBER=$(cat ../.buildnumber)
+	    echo "Got build number $BUILDNUMBER"
 	    #Getting ingress external IP and converting it to hostname for current stage
 	    export EXT_NAME="$1.$(kubectl -n kube-system get svc addon-http-application-routing-nginx-ingress --output jsonpath='{.status.loadBalancer.ingress[0].ip}').nip.io"
+	    echo "Got env url $EXT_NAME"
 	    #Setting ingress hostname
 	    envsubst < manifests/ingress-tmp.yaml > manifests/ingress.yaml
+	    #Setting build number
+	    envsubst < manifests.$1/kustomization-tmp.yaml > manifests.$1/kustomization.yaml
 	    echo "Setting up application"
 	    kubectl apply -k manifests.$1/
 	    rm manifests/ingress.yaml
+	    rm manifests.$1/kustomization.yaml
 	    echo "Current namespaces:"
 	    kubectl get all -n $1
 	    echo "============================================================"

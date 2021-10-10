@@ -1,5 +1,5 @@
 #!/bin/bash -
-#Building project for different environments
+#Manual CI/CD pipeline project for different environments
 
 if [ $# -eq 1 ]
 then
@@ -11,12 +11,15 @@ then
 	      -Dsonar.organization=as-cicd-task \
 	      -Dsonar.projectKey=cicd-task \
 	      -Dsonar.sources=. \
-	      -Dsonar.host.url=https://sonarcloud.io -Dsonar.exclusions=**/jquery.js
+	      -Dsonar.host.url=https://sonarcloud.io -Dsonar.exclusions=**/jquery.js \
+	    || { echo "Error scanning source code!"; exit 1; }
             echo "Building infrastructure for $1"
 	    pushd terraform
 		terraform init
 		terraform apply -auto-approve || { echo "Error creating infrastructure!"; exit 1; }
 	    popd
+	    echo "MAN$(date +%Y%m%d%H%M%S)" > .buildnumber
+	    echo "Buildnumber $(cat .buildnumber)"
 	    echo "Building backend containers for $1"
 	    pushd backend
 		./build-back-k8s $1 || { echo "Error building backend!"; exit 1; }

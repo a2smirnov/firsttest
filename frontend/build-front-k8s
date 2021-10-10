@@ -6,8 +6,9 @@ then
     echo "Trying to build frontend for $1 environment"
     case "$1" in
         "dev"|"prod")
-            echo "Building $1"
-	    docker build --build-arg ENV_TYPE=$1 -t fe-nginx-$1:latest -f ./Dockerfile . 
+	    BUILDNUMBER=$(cat ../.buildnumber)
+            echo "Building $1 build number $BUILDNUMBER"
+	    docker build --build-arg ENV_TYPE=$1 -t fe-nginx-$1:$BUILDNUMBER -f ./Dockerfile . 
 	    ;;
         *) 
 	    echo "Wrong parameter '$1'"

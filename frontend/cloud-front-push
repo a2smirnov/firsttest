@@ -4,7 +4,8 @@ then
     echo "Trying to build application for $1 environment"
     case "$1" in
         "dev"|"prod")
-            echo "Pushing $1 to cloud registry"
+	    BUILDNUMBER=$(cat ../.buildnumber)
+            echo "Pushing $1 build $BUILDNUMBER to cloud registry"
 	    echo "Getting credentials for ACR access from terraform"
 	    pushd ../terraform/
 	    acr_server=$(terraform output -raw acr_login_server)
@@ -12,9 +13,9 @@ then
 	    acr_password=$(terraform output -raw acr_admin_password)
 	    popd
 	    docker login -u $acr_username -p $acr_password $acr_server
-	    echo "Pushing image fe-nginx-$1"
-	    docker image tag fe-nginx-$1:latest $acr_server/$acr_username/fe-nginx-$1:latest
-	    docker image push $acr_server/$acr_username/fe-nginx-$1:latest
+	    echo "Pushing image fe-nginx-$1:$BUILDNUMBER"
+	    docker image tag fe-nginx-$1:$BUILDNUMBER $acr_server/$acr_username/fe-nginx-$1:$BUILDNUMBER
+	    docker image push $acr_server/$acr_username/fe-nginx-$1:$BUILDNUMBER
             ;;
         *)
             echo "Wrong parameter '$1'"

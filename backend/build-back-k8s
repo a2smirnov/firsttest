@@ -6,9 +6,10 @@ then
     echo "Trying to build application for $1 environment"
     case "$1" in
         "dev"|"prod")
-            echo "Building $1"
-	    docker build -f ./Dockerfile-nginx -t be-nginx-$1:latest .
-	    docker build -f ./Dockerfile-php --build-arg ENV_TYPE=$1 -t be-php-$1:latest .
+	    BUILDNUMBER=$(cat ../.buildnumber)
+            echo "Building $1 build number $BUILDNUMBER"
+	    docker build -f ./Dockerfile-nginx -t be-nginx-$1:$BUILDNUMBER .
+	    docker build -f ./Dockerfile-php --build-arg ENV_TYPE=$1 -t be-php-$1:$BUILDNUMBER .
 	    ;;
         *) 
 	    echo "Wrong parameter '$1'"

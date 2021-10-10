@@ -10,17 +10,6 @@ then
 	    echo "$(terraform output -raw kube_config)" > ../k8s/azurek8s
 	    popd
 	    export KUBECONFIG=./azurek8s
-	    if [ $1 = "dev" ]
-	    then
-		    echo "Removing k8s secret"
-		    kubectl delete secret azure-secret -n $1
-	    fi;
-	    echo "Removing application"
-            kubectl delete -k manifests.$1/
-	    echo "Removing secrets"
-            kubectl delete secret app-secret -n $1
-	    echo "Removing configMap"
-            kubectl delete configmap app-public -n $1
 	    echo "Removing namespace"
 	    kubectl delete namespace $1
 	    echo "Current namespaces:"

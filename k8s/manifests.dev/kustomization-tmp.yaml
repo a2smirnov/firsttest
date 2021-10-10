@@ -3,11 +3,11 @@ bases:
 namespace: dev
 images:
 - name: ascicdacr.azurecr.io/ascicdacr/fe-nginx
-  newName: ascicdacr.azurecr.io/ascicdacr/fe-nginx-dev
+  newName: ascicdacr.azurecr.io/ascicdacr/fe-nginx-dev:${BUILDNUMBER}
 - name: ascicdacr.azurecr.io/ascicdacr/be-nginx
-  newName: ascicdacr.azurecr.io/ascicdacr/be-nginx-dev
+  newName: ascicdacr.azurecr.io/ascicdacr/be-nginx-dev:${BUILDNUMBER}
 - name: ascicdacr.azurecr.io/ascicdacr/be-php
-  newName: ascicdacr.azurecr.io/ascicdacr/be-php-dev
+  newName: ascicdacr.azurecr.io/ascicdacr/be-php-dev:${BUILDNUMBER}
 patchesStrategicMerge:
 - fe-pv.yaml
 - be-php-pv.yaml
